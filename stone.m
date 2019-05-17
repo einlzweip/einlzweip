@@ -2,7 +2,7 @@ classdef stone
     %UNTITLED2 Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties
+    properties re
         type;
         colors;
         turn;

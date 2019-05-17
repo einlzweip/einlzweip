@@ -1,8 +1,8 @@
-classdef stone
+classdef stone < handle
     %UNTITLED2 Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties re
+    properties
         type;
         colors;
         turn;
@@ -13,6 +13,13 @@ classdef stone
             s.type=type;
             s.colors=colors;
             s.turn=turn;
+        end
+        function s1 = set(s,type)
+            s1=s;
+            s1.type=type;
+        end
+        function set2(a,type)
+            a.type=type;
         end
     end 
 end

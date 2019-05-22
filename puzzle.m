@@ -61,6 +61,30 @@ classdef puzzle < handle
             elseif(s(p4,2) == 1 & (any(p.Grün == p4) | any(p.Blau == p4)))
                 p.stones(p4,2) = 2;
             end
+            
+            p5 = find(position == 18);
+            p.stones(p5,1) = 24;
+            if(s(p5,2) == 0)
+            
+            end
+            
+            p6 = find(position == 10);
+            p.stones(p6,1) = 21;
+            if(s(p6,2) == 0)
+            
+            end
+            
+            p7 = find(position == 1);
+            p.stones(p7,1) = 18;
+            if(s(p7,2) == 0)
+            
+            end
+            
+            p8 = find(position == 4)
+            p.stones(p8,1) = 10;
+            if(s(p8,2) == 0)
+            
+            end
                 
             
            

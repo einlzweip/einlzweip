@@ -56,7 +56,7 @@ classdef puzzle < handle
             p.stones(p4,1) = 15;
             if(s(p4,2) == 0)
                 p.stones(p4,2) = 1;
-            elseif(s(p4,2) == 1 & (any(p.Rot == p4) | any(p.Orange == p4)))
+            elseif(s(p4,2) == 1 & (any(p.Weiß == p4) | any(p.Gelb == p4)))
                 p.stones(p4,2) = 0;
             elseif(s(p4,2) == 1 & (any(p.Grün == p4) | any(p.Blau == p4)))
                 p.stones(p4,2) = 2;

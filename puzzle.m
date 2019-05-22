@@ -27,7 +27,7 @@ classdef puzzle < handle
             if(s(p1,2) == 0)
                 p.stones(p1,2) = 1;
             elseif(s(p1,2) == 1)
-                p1.turn = 0;
+                p.stones(p1,2) = 0;
             end
            
             p2=find(position == 15);

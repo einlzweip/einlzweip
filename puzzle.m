@@ -44,6 +44,19 @@ classdef puzzle < handle
                 p.stones(p2,2) = 1    
             end
             
+            p3 = find(position == 24);
+            p.stones(p3,1) = 7;
+            if(s(p3,2) == 0)
+                p.stones(p3,2) = 1;
+            elseif(s(p3,2) == 1)
+                p.stones(p3,2) = 0;
+            end
+            
+            p4 = find(position == 21);
+            p.stones(p4,1) = 15;
+            if(s(p4,2) == 0)
+                
+            
            
         end
         

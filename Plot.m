@@ -1,17 +1,11 @@
 function plot_cube(A)
     %Rotationsmatrizen
-    %Start von Position 9
-    E3=[0,1,0;-1,0,0;0,0,1];
-    E20=[1,0,0;0,-1,0;0,0,-1];
-    E1=E3^2;
-    E7=E3^2;
-    E9=eye(3);
-    E18=E3*E20;
-    E24=E3^2*E20;
-    E26=E3^3*E20;
-    %Start von Position 6
-    K12=[1,0,0;0,0,-1,0,1,0];
-    K8=E3;
+%Start von Position 9
+E3=[0,1,0;-1,0,0;0,0,1];
+E20=[1,0,0;0,-1,0;0,0,-1];
+%Start von Position 6
+K12=[1,0,0;0,0,-1;0,1,0];
+R={E3^2,E3,E3,E3^2,eye(3),eye(3),E3^2,E3^3,eye(3),E3^3,E3*K12,K12,K12,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,E3*E20,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*K12*E3^3,E3^3*E20};
     
     vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
     fac = [1 2 6 5;2 3 7 6;3 4 8 7;4 1 5 8;1 2 3 4;5 6 7 8];
@@ -26,7 +20,7 @@ function plot_cube(A)
             if (A(i,2) == 0)
             D = [C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)]
                 if
-            R * vert + t
+            R{A(i,1)} * vert + t
             
             if (A(i,2) == 1)
             D = [C(Color_stones(i,3),:); C(Color_stones(i,1),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,2),:)]

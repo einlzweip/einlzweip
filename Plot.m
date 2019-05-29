@@ -23,7 +23,17 @@ function plot_cube(A)
     for i = 1:26
         %Ecken
         if(any(i == [1 3 7 9 18 20 24 26]))
+            if (A(i,2) == 0)
             D = [C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)]
+                if
+            R * vert + t
+            
+            if (A(i,2) == 1)
+            D = [C(Color_stones(i,3),:); C(Color_stones(i,1),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,2),:)]
+            
+            if (A(i,2) == 2)
+            D = [C(Color_stones(i,1),:); C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,3),:)]
+        
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d

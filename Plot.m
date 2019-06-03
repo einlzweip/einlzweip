@@ -19,10 +19,12 @@ vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
     for i = 1:26
         %Ecken
         if(any(i == [1 3 7 9 18 20 24 26]))
+            D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+            vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)))
             if (A(i,2) == 0)
             D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
             %vert = vert  * R{A(i,1)} + T(i,:)
-            vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(i,:)))
+            %vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)))
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -31,9 +33,9 @@ vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
             end
             
             if (A(i,2) == 1)
-            D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+            D = [0 0 0; C(Color_stones(i,1),:); C(Color_stones(i,2),:); 0 0 0; 0 0 0; C(Color_stones(i,3),:)];
             %vert = vert  * R{A(i,1)} + T(i,:);
-            vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(i,:)))
+            %vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)))
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -42,9 +44,9 @@ vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
             end
             
             if (A(i,2) == 2)
-            D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+            D = [0 0 0; C(Color_stones(i,3),:); C(Color_stones(i,1),:); 0 0 0; 0 0 0; C(Color_stones(i,2),:)];
             %vert = vert * E3 * R{A(i,1)} + T(i,:);
-            vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(i,:)))
+            %vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)))
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -58,7 +60,7 @@ vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
             
             if (A(i,2) == 0)
                 D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-                vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(i,:)))
+                vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)))
                 patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
                 view(3)
                 axis vis3d
@@ -68,7 +70,7 @@ vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
             
             if (A(i,2) == 1)
                 D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-                vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(i,:)))
+                vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)))
                 patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
                 view(3)
                 axis vis3d
@@ -78,7 +80,7 @@ vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
             
             if (A(i,2) == 2)
                 D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-                vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(i,:)))
+                vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)))
                 patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
                 view(3)
                 axis vis3d
@@ -91,7 +93,7 @@ vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
         if(any(i == [5 11 13 14 16 22]'))
             D = [0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
             %vert = vert * R{A(i,1)} + T(i,:);
-            vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(i,:)));
+            vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d

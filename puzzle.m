@@ -151,7 +151,7 @@ classdef puzzle < handle
                 p.stones(p3,2) = 0;
             end
             
-            p4 = find(position == 22);
+            p4 = find(position == 23);
             p.stones(p4,1) = 12;
             if(s(p4,2) == 0)
                 p.stones(p4,2) = 1;
@@ -174,7 +174,7 @@ classdef puzzle < handle
             end
             
             p6 = find(position == 17);
-            p.stones(p6,1) = 22;
+            p.stones(p6,1) = 23;
             if(s(p6,2) == 0)
                 p.stones(p6,2) = 1;
             elseif(s(p6,2) == 1 && (any(p.Weiss == p6) || any(p.Gelb == p6)))
@@ -220,9 +220,11 @@ classdef puzzle < handle
         q1 = find(position == 1);
         p.stones(q1,1) = 3;
         if(s(q1,2) == 0)
-            p.stones(q1,2) = 1;
-        elseif(s(q1,2) == 1)
             p.stones(q1,2) = 0;
+        elseif(s(q1,2) == 1)
+            p.stones(q1,2) = 2;
+        elseif(s(q1,2) == 2)
+            p.stones(q1,2) = 1;
         end 
         
         q4=find(position == 6);
@@ -255,9 +257,11 @@ classdef puzzle < handle
         q3 = find(position == 3);
         p.stones(q3,1) = 9;
         if(s(q3,2) == 0)
-            p.stones(q3,2) = 1;
-        elseif(s(q3,2) == 1)
             p.stones(q3,2) = 0;
+        elseif(s(q3,2) == 1)
+            p.stones(q3,2) = 2;
+        elseif(s(q3,2) == 2)
+            p.stones(q3,2) = 1;
         end 
         
         q4=find(position == 6);
@@ -277,9 +281,11 @@ classdef puzzle < handle
         q5 = find(position == 9);
         p.stones(q5,1) = 7;
         if(s(q5,2) == 0)
-            p.stones(q5,2) = 1;
-        elseif(s(q5,2) == 1)
             p.stones(q5,2) = 0;
+        elseif(s(q5,2) == 1)
+            p.stones(q5,2) = 2;
+        elseif(s(q5,2) == 2)
+            p.stones(q5,2) = 1;
         end 
         
         q6=find(position == 8);
@@ -299,9 +305,11 @@ classdef puzzle < handle
         q7 = find(position == 7);
         p.stones(q7,1) = 1;
         if(s(q7,2) == 0)
-            p.stones(q7,2) = 1;
-        elseif(s(q7,2) == 1)
             p.stones(q7,2) = 0;
+        elseif(s(q7,2) == 1)
+            p.stones(q7,2) = 2;
+        elseif(s(q7,2) == 2)
+            p.stones(q7,2) = 1;
         end 
         
         q8=find(position == 4);
@@ -326,9 +334,11 @@ classdef puzzle < handle
         q1 = find(position == 18);
         p.stones(q1,1) = 24;
         if(s(q1,2) == 0)
-            p.stones(q1,2) = 1;
-        elseif(s(q1,2) == 1)
             p.stones(q1,2) = 0;
+        elseif(s(q1,2) == 1)
+            p.stones(q1,2) = 2;
+        elseif(s(q1,2) == 2)
+            p.stones(q1,2) = 1;
         end 
         
         q4=find(position == 23);
@@ -344,6 +354,7 @@ classdef puzzle < handle
         elseif(s(q4,2) == 2 && (any(p.Rot == q4) || any(p.Orange == q4)))
             p.stones(q4,2) = 1;       
         end
+        
         q2=find(position == 19);
         p.stones(q2,1) = 21;
         if(s(q2,2) == 0)
@@ -361,9 +372,11 @@ classdef puzzle < handle
         q3 = find(position == 20);
         p.stones(q3,1) = 18;
         if(s(q3,2) == 0)
-            p.stones(q3,2) = 1;
-        elseif(s(q3,2) == 1)
             p.stones(q3,2) = 0;
+        elseif(s(q3,2) == 1)
+            p.stones(q3,2) = 2;
+        elseif(s(q3,2) == 2)
+            p.stones(q3,2) = 1;
         end 
         
         q4=find(position == 23);
@@ -383,9 +396,11 @@ classdef puzzle < handle
         q5 = find(position == 26);
         p.stones(q5,1) = 20;
         if(s(q5,2) == 0)
-            p.stones(q5,2) = 1;
-        elseif(s(q5,2) == 1)
             p.stones(q5,2) = 0;
+        elseif(s(q5,2) == 1)
+            p.stones(q5,2) = 2;
+        elseif(s(q5,2) == 2)
+            p.stones(q5,2) = 1;
         end 
         
         q6=find(position == 25);
@@ -405,9 +420,11 @@ classdef puzzle < handle
         q7 = find(position == 24);
         p.stones(q7,1) = 26;
         if(s(q7,2) == 0)
-            p.stones(q7,2) = 1;
-        elseif(s(q7,2) == 1)
             p.stones(q7,2) = 0;
+        elseif(s(q7,2) == 1)
+            p.stones(q7,2) = 2;
+        elseif(s(q7,2) == 2)
+            p.stones(q7,2) = 1;
         end 
         
         q8=find(position == 21);

@@ -527,6 +527,7 @@ classdef puzzle < handle
             p.stones(p8,2)=0;
         end
     end
+    
     function Hn(p)
         s = p.stones;
         position = s(:,1); 
@@ -609,7 +610,44 @@ classdef puzzle < handle
         elseif(s(p8,2)==2)
             p.stones(p8,2)=0;
         end
-end
+    end
+
+    function Hp(p)
+        Hn(p)
+        Hn(p)
+        Hn(p)
+    end
+    
+    function Op(p)
+        On(p)
+        On(p)
+        On(p)
+    end
+    
+    function Up(p)
+        Un(p)
+        Un(p)
+        Un(p)
+    end
+    
+    function Ln(p)
+        Lp(p)
+        Lp(p)
+        Lp(p)
+    end
+    
+    function Rn(p)
+        Rp(p)
+        Rp(p)
+        Rp(p)
+    end
+    
+    function Vp(p)
+        Vn(p)
+        Vn(p)
+        Vn(p)
+    end
+    
     
     end
 end

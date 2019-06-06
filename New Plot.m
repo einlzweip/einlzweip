@@ -22,39 +22,39 @@ Color_stones = [6 3 4; 6 4 0; 6 4 1; 6 3 0; 6 0 0; 6 1 0; 6 2 3; 6 2 0; 6 1 2; 3
 2 1 0; 5 4 3; 5 4 0; 5 1 4; 5 3 0; 5 0 0; 5 1 0; 5 3 2; 5 2 0; 5 2 1];
     
 for i = 1:26
-%     %Ecken
-%     if(any(i == [1 3 7 9 18 20 24 26]))
-%         
-%         if (A(i,2) == 0)
-%             D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-%             vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-%             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-%             view(3)
-%             axis vis3d
-%             hold on
-%             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-%         end
-%             
-%         if (A(i,2) == 1)
-%             D = [0 0 0; C(Color_stones(i,3),:); C(Color_stones(i,1),:); 0 0 0; 0 0 0; C(Color_stones(i,2),:)];
-%             vert = transpose( R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-%             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-%             view(3)
-%             axis vis3d
-%             hold on
-%             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-%         end
-%             
-%         if (A(i,2) == 2)
-%             D = [0 0 0; C(Color_stones(i,1),:); C(Color_stones(i,2),:); 0 0 0; 0 0 0; C(Color_stones(i,3),:)];
-%             vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-%             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-%             view(3)
-%             axis vis3d
-%             hold on
-%             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-%         end
-%     end
+     %Ecken
+     if(any(i == [1 3 7 9 18 20 24 26]))
+         
+         if (A(i,2) == 0)
+             D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+             vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
+             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
+             view(3)
+             axis vis3d
+             hold on
+             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
+         end
+             
+         if (A(i,2) == 1)
+             D = [0 0 0; C(Color_stones(i,3),:); C(Color_stones(i,1),:); 0 0 0; 0 0 0; C(Color_stones(i,2),:)];
+             vert = transpose( R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
+             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
+             view(3)
+             axis vis3d
+             hold on
+             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
+         end
+             
+         if (A(i,2) == 2)
+             D = [0 0 0; C(Color_stones(i,1),:); C(Color_stones(i,2),:); 0 0 0; 0 0 0; C(Color_stones(i,3),:)];
+             vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
+             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
+             view(3)
+             axis vis3d
+             hold on
+             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
+         end
+     end
         %Kanten
         
     if(any(i == [2 4 6 8 10 12 15 17 19 21 23 25]))
@@ -119,22 +119,30 @@ for i = 1:26
             D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
             if (any(i == [6 12]) && A(i,1) == 8)
                 vert = transpose(E7 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif  (any(i == [2]) && A(i,1) == 2)
+            elseif  (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 2)
                 vert = transpose(E7 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [1 0 0]));
-            elseif (any(i == [2]) && A(i,1) == 4)
+            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 4)
                 vert = transpose(E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (any(i == [2]) && A(i,1) == 6)
+            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 6)
                 vert = transpose(E3^3 * E7 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (any(i == [2]) && A(i,1) == 8)
+            elseif (any(i == [2 4 6 8 10 19 21 23 25]) && A(i,1) == 8)
                 vert = transpose(E7 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif (any(i == [2]) && A(i,1) == 10)
+            elseif (any(i == [2 8 10 12 19 25]) && A(i,1) == 10)
                 vert = transpose(E7^2 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif (any(i == [2]) && A(i,1) == 12)
+            elseif (any(i == [2 8 10 12 19 25]) && A(i,1) == 12)
                 vert = transpose(K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 -1]));
-            elseif (any(i == [4]) && A(i,1) == 15)
+            elseif (any(i == [4 6 15 17 21 23]) && A(i,1) == 15)
                 vert = transpose(K12^3 * E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            %elseif (any(i == [2]) && A(i,1) == 12)
-            %    vert = transpose(K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 -1]));               
+            elseif (any(i == [4 6 15 17 21 23]) && A(i,1) == 17)
+                vert = transpose(E7^3 *E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 -1]));
+            elseif (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 19)
+                vert = transpose(E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
+            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 21)
+                vert = transpose(E3 * E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
+            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 23)
+                vert = transpose(K12 *E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
+            elseif (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 25)
+                vert = transpose(E7^3 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [1 0 0])); 
             else
                 vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
             end

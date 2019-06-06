@@ -60,13 +60,13 @@ for i = 1:26
     if(any(i == [2 4 6 8 10 12 15 17 19 21 23 25]))
             
         if (A(i,2) == 0)
-            if(any(i == [15 17]) && A(i,1) ==12)
+            if(any(i == [15 17]) && A(i,1) == 12)
                 vert = transpose(K12*transpose(vert)+transpose(T(A(i,1),:)-[0 0 1]));
-            elseif(any(i == 12) && A(i,1) ==17)
+            elseif(any(i == [10 12]) && A(i,1) == 17)
                 vert = transpose(E7^3*E3^3*transpose(vert)+transpose(T(A(i,1),:)-[0 0 1]));
-            elseif(any(i == 10) && A(i,1) == 15)
+            elseif(any(i == [10 12]) && A(i,1) == 15)
                 vert = transpose(E7 * E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif(any(i == 15) && A(i,1) == 10)
+            elseif(any(i == [15 17]) && A(i,1) == 10)
                 vert = transpose(K12 * E3^2 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
             else
                 vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
@@ -81,7 +81,7 @@ for i = 1:26
         end
             
         if (A(i,2) == 1)
-            if(any(i == [4 6 8 21 23 25]) && A(i,1) == 12)
+            if(any(i == [4 6 21 23]) && A(i,1) == 12)
                 vert = transpose(K12 * transpose(vert) + transpose(T(A(i,1),:) - [0 0 1]));
             elseif (any(i == [10 12 15]) && A(i,1) == 6)
                 vert = transpose(K12^3 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
@@ -91,18 +91,22 @@ for i = 1:26
                 vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
             elseif (any(i == [4 6]) && A(i,1) == 8)
                 vert = transpose(E3^3 * transpose(vert) + transpose(T(A(i,1),:) )); 
-            elseif (any(i == [2 6 8 19 23 25]) && A(i,1) == 15)
+            elseif (any(i == [2 8 19 25]) && A(i,1) == 15)
                 vert= transpose(E7 * E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif (any(i == [2 4 8 19 21 25]) && A(i,1) == 17)
+            elseif (any(i == [2 8 19 25]) && A(i,1) == 17)
                 vert= transpose(E7^3*E3^3*transpose(vert)+transpose(T(A(i,1),:)+[0 0 -1]));
-            elseif (any(i == [10 15 17]) && A(i,1) == 25)
+            elseif (any(i == [15 17]) && A(i,1) == 25)
                 vert = transpose(E7^3*K12^3*transpose(vert)+transpose(T(A(i,1),:)+[1 0 0]));
-            elseif (any(i == [4 21]) && A(i,1) == 10)
+            elseif (any(i == [4 6 21 23]) && A(i,1) == 10)
                 vert = transpose(E7^2 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif (any(i == [10]) && A(i,1) == 21)
+            elseif (any(i == [10 12]) && A(i,1) == 21)
                 vert = transpose(K12 * E7 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
             elseif (any(i == [10]) && A(i,1) == 4)
                 vert = transpose(E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
+            elseif (any(i == [10]) && A(i,1) == 23)
+                vert = transpose(K12 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
+            elseif (any(i == [15 17]) && A(i,1) == 19)
+                vert = transpose(E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
             else
                 vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));    
             end

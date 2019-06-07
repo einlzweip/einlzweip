@@ -1,5 +1,6 @@
 function plot_cube(A)
-    %Rotationsmatrizen
+clf
+%Rotationsmatrizen
 %Start von Position 9
 E3=[0,1,0;-1,0,0;0,0,1];
 E20=[1,0,0;0,-1,0;0,0,-1];
@@ -10,8 +11,9 @@ K12=[1,0,0;0,0,-1;0,1,0];
 R={E3^2,E3,E3,E3^2,eye(3),eye(3),E3^3,E3^3,eye(3),K12*E3^2,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,E3*E20,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,E3^3*E20};
 R1={E3^2,E3,E3^2*E7,E3^2,eye(3),eye(3),E7,E7*K12^3,eye(3),E3*K12,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,K12^2*E7,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,E7^3};
 R2={E3^2,E3,K12,E3^2,eye(3),eye(3),E3^2*K12,E3^3,eye(3),E3*K12,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,K12*E3^2,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,K12^3};
-T = [1 1 2; 1 1 2; 2 1 2; 1 2 2; 1 1 2; 2 1 2; 1 2 2; 2 2 2; 2 2 2; 1 1 1; 1 1 1; 2 1 2; 1 2 1; 2 1 1; 1 2 1; 1 2 2; 2 2 2; 1 1 1; 2 1 1; 2 1 1; 1 1 1; 1 2 1; 2 2 1; 1 2 1; 1 2 1; 2 2 1];       
-figure()
+T = [1 1 2; 1 1 2; 2 1 2; 1 2 2; 1 1 2; 2 1 2; 1 2 2; 2 2 2; 2 2 2; 1 1 1; 1 1 1; 2 1 2; 1 2 1; 2 1 1; 1 2 1; 1 2 2; 2 2 2; 1 1 1; 2 1 1; 2 1 1; 1 1 1; 1 2 1; 2 2 1; 1 2 1; 1 2 1; 2 2 1]-1.5;   
+
+%figure()
 hold on
 vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
 fac = [1 2 6 5;2 3 7 6;3 4 8 7;4 1 5 8;1 2 3 4;5 6 7 8];
@@ -22,9 +24,7 @@ Color_stones = [6 3 4; 6 4 0; 6 4 1; 6 3 0; 6 0 0; 6 1 0; 6 2 3; 6 2 0; 6 1 2; 3
 2 1 0; 5 4 3; 5 4 0; 5 1 4; 5 3 0; 5 0 0; 5 1 0; 5 3 2; 5 2 0; 5 2 1];
     
 for i = 1:26
-     
-    %Ecken
-     
+     %Ecken
      if(any(i == [1 3 7 9 18 20 24 26]))
          
          if (A(i,2) == 0)
@@ -57,8 +57,7 @@ for i = 1:26
              vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
          end
      end
-     
-     %Kanten
+        %Kanten
         
     if(any(i == [2 4 6 8 10 12 15 17 19 21 23 25]))
             
@@ -75,6 +74,7 @@ for i = 1:26
                 vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
             end
             D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+            
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -103,9 +103,9 @@ for i = 1:26
                 vert = transpose(E7^2 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
             elseif (any(i == [10 12]) && A(i,1) == 21)
                 vert = transpose(K12 * E7 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (i == 10 && A(i,1) == 4)
+            elseif (any(i == [10]) && A(i,1) == 4)
                 vert = transpose(E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (i == 10 && A(i,1) == 23)
+            elseif (any(i == [10]) && A(i,1) == 23)
                 vert = transpose(K12 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
             elseif (any(i == [15 17]) && A(i,1) == 19)
                 vert = transpose(E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
@@ -113,6 +113,7 @@ for i = 1:26
                 vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));    
             end
             D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+    
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -121,6 +122,7 @@ for i = 1:26
         end
             
         if (A(i,2) == 2)
+            D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
             if (any(i == [6 12]) && A(i,1) == 8)
                 vert = transpose(E7 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
             elseif  (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 2)
@@ -150,7 +152,6 @@ for i = 1:26
             else
                 vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
             end
-            D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -160,7 +161,6 @@ for i = 1:26
     end
        
         %Mittelsteine
-        
     if(any(i == [5 11 13 14 16 22]'))
         D = [0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
         vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
@@ -169,6 +169,31 @@ for i = 1:26
         axis vis3d
         hold on
         vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-     end
+    end
+     
 end
+
+
+
+
+sl = uicontrol(gcf,'Style','Pushbutton',...
+	       'Position',[20,20,50,20],...
+	       'Tag','myslider','string', 'Lp');
+set(sl,'Callback',@pushbutton1_Callback)
+
+function pushbutton1_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+p=puzzle(A);
+
+clf
+plot_Ln(A);
+
+
+
+
 end
+
+
+end
+
+

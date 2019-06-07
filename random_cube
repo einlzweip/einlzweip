@@ -1,0 +1,38 @@
+function random_cube(A)
+p=puzzle(A)
+s=zeros(100,1)
+for x=1:100
+    s(x)=randi(12)
+    switch s(x)
+        case 1
+            Lp(p);
+        case 2
+            Rp(p);
+        case 3
+            Ln(p);
+        case 4
+            Rn(p);
+        case 5
+            On(p);
+        case 6
+            Op(p);
+        case 7
+            Up(p);
+        case 8
+            Un(p);
+        case 9
+            Vn(p);
+        case 10
+            Vp(p);
+        case 11
+            Hn(p);
+        case 12
+            Hp(p);
+    end
+    
+end
+clf('reset')
+plot_cube(p.stones);
+s
+end
+

@@ -202,29 +202,44 @@ for i = 1:26
         vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
     end
 end
+
 F(j)=getframe;
 j=j+1;
 end
 
+pl = uicontrol(gcf,'Style','Pushbutton',...
+ 	       'Position',[20,50,50,20],...
+ 	       'Tag','pushbutton1','string', 'Ln');
+set(pl,'Callback',@pushbutton1_Callback)
 
-
- 
- sl = uicontrol(gcf,'Style','Pushbutton',...
- 	       'Position',[20,20,50,20],...
- 	       'Tag','myslider','string', 'Ln');
- set(sl,'Callback',@pushbutton1_Callback)
- 
 function pushbutton1_Callback(hObject, eventdata, handles)
 import /home/2016/streibls/puzzle.* 
 p=puzzle(A);
 Ln(p);
 A = p.stones;
-
 clf;
 plot_Ln(A);
+end
 
+p2 = uicontrol(gcf,'Style','Pushbutton',...
+ 	       'Position',[80,80,50,20],...
+ 	       'Tag','pushbutton2','string', 'Rp');
+set(p2,'Callback',@pushbutton2_Callback)
+
+function pushbutton2_Callback(hObject, eventdata, ~)
+import /home/2016/streibls/puzzle.* 
+p=puzzle(A);
+Ln(p);
+A = p.stones;
+clf;
+plot_Rp(A);
+end
+
+sl = uicontrol(gcf,'Style','Slider',...
+ 	       'Position',[20,20,460,20],...
+ 	       'Tag','myslider');
+set(sl,'Callback',@slider_callback)
 
 end
 
 
-end

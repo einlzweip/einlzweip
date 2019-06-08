@@ -175,27 +175,32 @@ for i = 1:26
      
 end
 
-
-
-
 sl = uicontrol(gcf,'Style','Pushbutton',...
-	       'Position',[20,20,50,20],...
-	       'Tag','myslider','string', 'Lp');
+	       'Position',[20,50,50,20],...
+	       'Tag','myslider','string', 'Ln');
 set(sl,'Callback',@pushbutton1_Callback)
 
 function pushbutton1_Callback(hObject, eventdata, handles)
 import /home/2016/streibls/puzzle.* 
 p=puzzle(A);
-
-clf
+clf;
 plot_Ln(A);
+end
 
+sl = uicontrol(gcf,'Style','Pushbutton',...
+ 	       'Position',[80,80,50,20],...
+ 	       'Tag','pushbutton2','string', 'Rp');
+set(sl,'Callback',@pushbutton2_Callback)
 
-
+function pushbutton2_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+p=puzzle(A);
+A = p.stones;
+clf;
+plot_Rp(A);
+end
 
 end
 
-
-end
 
 

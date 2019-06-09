@@ -63,7 +63,7 @@ classdef puzzle < handle
                 p.stones(p4,2) = 2;
             elseif(s(p4,2) == 1 && (any(p.Rot == p4) || any(p.Orange == p4)))
                 p.stones(p4,2) = 0;
-            elseif(s(p4,2) == 2 && (any(p.Rot == p4) || any(p.Orange == p4))
+            elseif(s(p4,2) == 2 && (any(p.Rot == p4) || any(p.Orange == p4)))
                 p.stones(p4,2) = 2;
             elseif s(p4,2) == 2 %&& (any(p.Rot == p4) || any(p.Orange == p4)))
                 p.stones(p4,2) = 1;    

@@ -19,7 +19,7 @@ classdef puzzle < handle
             p.stones=stones;
         end
         
-     function Lp(p)
+            function Lp(p)
 
             s=p.stones;
 
@@ -41,10 +41,10 @@ classdef puzzle < handle
                 p.stones(p2,2) = 2;
             elseif(s(p2,2) == 1 && (any(p.Rot == p2) || any(p.Orange == p2)))
                 p.stones(p2,2) = 0;
-            elseif(s(p2,2) == 2 && (any(p.Weiss == p2) || any(p.Gelb == p2)))
-                p.stones(p2,2) = 1;
             elseif(s(p2,2) == 2 && (any(p.Rot == p2) || any(p.Orange == p2)))
-                p.stones(p2,2) = 2;    
+                p.stones(p2,2) = 2;
+            elseif s(p2,2) == 2
+                p.stones(p2,2) = 1;
             end            
 
             p3 = find(position == 24);
@@ -65,7 +65,7 @@ classdef puzzle < handle
                 p.stones(p4,2) = 0;
             elseif(s(p4,2) == 2 && (any(p.Rot == p4) || any(p.Orange == p4)))
                 p.stones(p4,2) = 2;
-            elseif s(p4,2) == 2 %&& (any(p.Rot == p4) || any(p.Orange == p4)))
+            elseif s(p4,2) == 2 
                 p.stones(p4,2) = 1;    
             end
             
@@ -77,18 +77,18 @@ classdef puzzle < handle
                 p.stones(p5,2) = 0;
             end
             
-            p6 = find(position == 10)
-            p.stones(p6,1) = 21
+            p6 = find(position == 10);
+            p.stones(p6,1) = 21;
             if(s(p6,2) == 0)
                 p.stones(p6,2) = 1;
             elseif(s(p6,2) == 1 && (any(p.Blau == p6) || any(p.Gruen == p6)))
                 p.stones(p6,2) = 2;
             elseif(s(p6,2) == 1 && (any(p.Rot == p6) || any(p.Orange == p6)))
                 p.stones(p6,2) = 0;
-            elseif(s(p6,2) == 2 && (any(p.Blau == p6) || any(p.Gruen == p6)))
-                p.stones(p6,2) = 1;
             elseif(s(p6,2) == 2 && (any(p.Rot == p6) || any(p.Orange == p6)))
-                p.stones(p6,2) = 2;    
+                p.stones(p6,2) = 2;
+            elseif s(p6,2) == 2 
+                p.stones(p6,2) = 1;
             end            
             
             p7 = find(position == 1);
@@ -99,7 +99,7 @@ classdef puzzle < handle
                 p.stones(p7,2) = 0;
             end
             
-            p8 = find(position == 4)
+            p8 = find(position == 4);
             p.stones(p8,1) = 10;
             if(s(p8,2) == 0)
                 p.stones(p8,2) = 1;
@@ -109,14 +109,17 @@ classdef puzzle < handle
                 p.stones(p8,2) = 0;
             elseif(s(p8,2) == 2 && (any(p.Rot == p8) || any(p.Orange == p8)))
                 p.stones(p8,2) = 2;
-            elseif s(p8,2) == 2 %&& (any(p.Gruen == p8) || any(p.Blau == p8))
+            elseif s(p8,2) == 2
                  p.stones(p8,2) = 1;    
             end                                        
            
         end
-                
+        
+        
         function Rp(p)
+
             s=p.stones;
+
             position = s(:,1);
             
             p1=find(position == 3);
@@ -131,14 +134,14 @@ classdef puzzle < handle
             p.stones(p2,1) = 6;
             if(s(p2,2) == 0)
                 p.stones(p2,2) = 1;
-            elseif(s(p2,2) == 1 && (any(p.Weiss == p2) || any(p.Gelb == p2)))
-                p.stones(p2,2) = 0;
+            elseif(s(p2,2) == 1 && (any(p.Gruen == p2) || any(p.Blau == p2)))
+                p.stones(p2,2) = 2;
             elseif(s(p2,2) == 1 && (any(p.Rot == p2) || any(p.Orange == p2)))
                 p.stones(p2,2) = 2;
-            elseif(s(p2,2) == 2 && (any(p.Weiss == p2) || any(p.Gelb == p2)))
-                p.stones(p2,2) = 1;
             elseif(s(p2,2) == 2 && (any(p.Rot == p2) || any(p.Orange == p2)))
-                p.stones(p2,2) = 2;    
+                p.stones(p2,2) = 2;
+            elseif s(p2,2) == 2
+                p.stones(p2,2) = 1;
             end
             
             p3 = find(position == 20);
@@ -157,9 +160,9 @@ classdef puzzle < handle
                 p.stones(p4,2) = 2;
             elseif(s(p4,2) == 1 && (any(p.Rot == p4) || any(p.Orange == p4)))
                 p.stones(p4,2) = 0;
-            elseif(s(p4,2) == 2 && (any(p.Weiss == p4) || any(p.Gelb == p4)))
-                p.stones(p4,2) = 2;
             elseif(s(p4,2) == 2 && (any(p.Rot == p4) || any(p.Orange == p4)))
+                p.stones(p4,2) = 2;
+            elseif s(p4,2) == 2
                 p.stones(p4,2) = 1;    
             end
             
@@ -175,16 +178,15 @@ classdef puzzle < handle
             p.stones(p6,1) = 23;
             if(s(p6,2) == 0)
                 p.stones(p6,2) = 1;
-            elseif(s(p6,2) == 1 && (any(p.Weiss == p6) || any(p.Gelb == p6)))
-                p.stones(p6,2) = 0;
+            elseif(s(p6,2) == 1 && (any(p.Gruen == p6) || any(p.Blau == p6)))
+                p.stones(p6,2) = 2;
             elseif(s(p6,2) == 1 && (any(p.Rot == p6) || any(p.Orange == p6)))
                 p.stones(p6,2) = 2;
-            elseif(s(p6,2) == 2 && (any(p.Weiss == p6) || any(p.Gelb == p6)))
-                p.stones(p6,2) = 1;
             elseif(s(p6,2) == 2 && (any(p.Rot == p6) || any(p.Orange == p6)))
-                p.stones(p6,2) = 2;    
+                p.stones(p6,2) = 2;
+            elseif s(p6,2) == 2
+                p.stones(p6,2) = 1; 
             end
-            
             
             p7 = find(position == 9);
             p.stones(p7,1) = 26;
@@ -202,17 +204,16 @@ classdef puzzle < handle
                 p.stones(p8,2) = 2;
             elseif(s(p8,2) == 1 && (any(p.Rot == p8) || any(p.Orange == p8)))
                 p.stones(p8,2) = 0;
-            elseif(s(p8,2) == 2 && (any(p.Weiss == p8) || any(p.Gelb == p8)))
-                p.stones(p8,2) = 2;
             elseif(s(p8,2) == 2 && (any(p.Rot == p8) || any(p.Orange == p8)))
+                p.stones(p8,2) = 2;
+            elseif s(p8,2) == 2
                 p.stones(p8,2) = 1;    
             end
-    end
-        
-        
+        end
+               
         
     function On(p)
-        s = p.stones;
+        s = p.stones;        
         position = s(:,1); 
         
         q1 = find(position == 1);
@@ -225,19 +226,6 @@ classdef puzzle < handle
             p.stones(q1,2) = 1;
         end 
         
-        q4=find(position == 6);
-        p.stones(q4,1) = 8;
-        if(s(q4,2) == 0)
-            p.stones(q4,2) = 1;
-        elseif(s(q4,2) == 1 && (any(p.Weiss == q4) || any(p.Gelb == q4)))
-            p.stones(q4,2) = 0;
-        elseif(s(q4,2) == 1 && (any(p.Rot == q4) || any(p.Orange == q4)))
-            p.stones(q4,2) = 2;
-        elseif(s(q4,2) == 2 && (any(p.Weiss == q4) || any(p.Gelb == q4)))           
-            p.stones(q4,2) = 2;
-        elseif(s(q4,2) == 2 && (any(p.Rot == q4) || any(p.Orange == q4)))
-            p.stones(q4,2) = 1;       
-        end
         q2=find(position == 2);
         p.stones(q2,1) = 6;
         if(s(q2,2) == 0)
@@ -248,7 +236,7 @@ classdef puzzle < handle
             p.stones(q2,2) = 2;
         elseif(s(q2,2) == 2 && (any(p.Weiss == q2) || any(p.Gelb == q2)))           
             p.stones(q2,2) = 2;
-        elseif(s(q2,2) == 2 && (any(p.Gruen == q2) || any(p.Blau == q2)))
+        elseif s(q2,2) == 2
             p.stones(q2,2) = 1;       
         end
         
@@ -262,7 +250,7 @@ classdef puzzle < handle
             p.stones(q3,2) = 1;
         end 
         
-        q4=find(position == 6);
+         q4=find(position == 6);
         p.stones(q4,1) = 8;
         if(s(q4,2) == 0)
             p.stones(q4,2) = 1;
@@ -271,11 +259,11 @@ classdef puzzle < handle
         elseif(s(q4,2) == 1 && (any(p.Rot == q4) || any(p.Orange == q4)))
             p.stones(q4,2) = 2;
         elseif(s(q4,2) == 2 && (any(p.Weiss == q4) || any(p.Gelb == q4)))           
-            p.stones(q4,2) = 2;
-        elseif(s(q4,2) == 2 && (any(p.Rot == q4) || any(p.Orange == q4)))
-            p.stones(q4,2) = 1;       
+            p.stones(q4,2) = 2; 
+        elseif s(q4,2) == 2 
+            p.stones(q4,2) = 1; 
         end
-        
+       
         q5 = find(position == 9);
         p.stones(q5,1) = 7;
         if(s(q5,2) == 0)
@@ -288,7 +276,7 @@ classdef puzzle < handle
         
         q6=find(position == 8);
         p.stones(q6,1) = 4;
-        if(s(q6,2) == 0)
+        if(s(q6) == 0)
             p.stones(q6,2) = 1;
         elseif(s(q6,2) == 1 && (any(p.Weiss == q6) || any(p.Gelb == q6)))
             p.stones(q6,2) = 0;
@@ -296,8 +284,8 @@ classdef puzzle < handle
             p.stones(q6,2) = 2;
         elseif(s(q6,2) == 2 && (any(p.Weiss == q6) || any(p.Gelb == q6)))           
             p.stones(q6,2) = 2;
-        elseif(s(q6,2) == 2 && (any(p.Gruen == q6) || any(p.Blau == q6)))
-            p.stones(q6,2) = 1;       
+        elseif s(q6,2) == 2
+            p.stones(q6,2) = 1;      
         end
         
         q7 = find(position == 7);
@@ -314,16 +302,17 @@ classdef puzzle < handle
         p.stones(q8,1) = 2;
         if(s(q8,2) == 0)
             p.stones(q8,2) = 1;
-        elseif(s(q8,2) == 1 && (any(p.Weiss == q8) || any(p.Gelb == q8)))
+        elseif(s(q8,2) == 1 && (any(p.Weiss == 8) || any(p.Gelb == q8)))
             p.stones(q8,2) = 0;
         elseif(s(q8,2) == 1 && (any(p.Rot == q8) || any(p.Orange == q8)))
             p.stones(q8,2) = 2;
         elseif(s(q8,2) == 2 && (any(p.Weiss == q8) || any(p.Gelb == q8)))           
-            p.stones(q8,2) = 2;
-        elseif(s(q8,2) == 2 && (any(p.Rot == q8) || any(p.Orange == q8)))
+            p.stones(q8,2) = 2; 
+        elseif s(q8,2) == 2 
             p.stones(q8,2) = 1;       
         end
     end
+    
     
     function Un(p)
         s = p.stones;
@@ -339,20 +328,6 @@ classdef puzzle < handle
             p.stones(q1,2) = 1;
         end 
         
-        q4=find(position == 23);
-        p.stones(q4,1) = 19;
-        if(s(q4,2) == 0)
-            p.stones(q4,2) = 1;
-        elseif(s(q4,2) == 1 && (any(p.Weiss == q4) || any(p.Gelb == q4)))
-            p.stones(q4,2) = 0;
-        elseif(s(q4,2) == 1 && (any(p.Rot == q4) || any(p.Orange == q4)))
-            p.stones(q4,2) = 2;
-        elseif(s(q4,2) == 2 && (any(p.Weiss == q4) || any(p.Gelb == q4)))           
-            p.stones(q4,2) = 2;
-        elseif(s(q4,2) == 2 && (any(p.Rot == q4) || any(p.Orange == q4)))
-            p.stones(q4,2) = 1;       
-        end
-        
         q2=find(position == 19);
         p.stones(q2,1) = 21;
         if(s(q2,2) == 0)
@@ -363,7 +338,7 @@ classdef puzzle < handle
             p.stones(q2,2) = 2;
         elseif(s(q2,2) == 2 && (any(p.Weiss == q2) || any(p.Gelb == q2)))           
             p.stones(q2,2) = 2;
-        elseif(s(q2,2) == 2 && (any(p.Gruen == q2) || any(p.Blau == q2)))
+        elseif s(q2,2) == 2
             p.stones(q2,2) = 1;       
         end
         
@@ -387,7 +362,7 @@ classdef puzzle < handle
             p.stones(q4,2) = 2;
         elseif(s(q4,2) == 2 && (any(p.Weiss == q4) || any(p.Gelb == q4)))           
             p.stones(q4,2) = 2;
-        elseif(s(q4,2) == 2 && (any(p.Rot == q4) || any(p.Orange == q4)))
+        elseif s(q4,2) == 2 
             p.stones(q4,2) = 1;       
         end
         
@@ -411,7 +386,7 @@ classdef puzzle < handle
             p.stones(q6,2) = 2;
         elseif(s(q6,2) == 2 && (any(p.Weiss == q6) || any(p.Gelb == q6)))           
             p.stones(q6,2) = 2;
-        elseif(s(q6,2) == 2 && (any(p.Gruen == q6) || any(p.Blau == q6)))
+        elseif s(q6,2) == 2 
             p.stones(q6,2) = 1;       
         end
         
@@ -435,11 +410,12 @@ classdef puzzle < handle
             p.stones(q8,2) = 2;
         elseif(s(q8,2) == 2 && (any(p.Weiss == q8) || any(p.Gelb == q8)))           
             p.stones(q8,2) = 2;
-        elseif(s(q8,2) == 2 && (any(p.Rot == q8) || any(p.Orange == q8)))
+        elseif s(q8,2) == 2
             p.stones(q8,2) = 1;       
         end
     end
        
+    
     function Vn(p)
         s = p.stones;
         position = s(:,1); 
@@ -453,16 +429,17 @@ classdef puzzle < handle
         end
         
         p2=find(position==2);
-        p.stones(p2,1)=10;
-       
+        p.stones(p2,1)=10;      
         if(s(p2,2)==0)
             p.stones(p2,2)=1;
         elseif(s(p2,2)==1 && (any(p.Weiss == p2) || any(p.Gelb == p2)))
             p.stones(p2,2)=2;
         elseif(s(p2,2)==1)
             p.stones(p2,2)=0;
-        elseif((any(p.Weiss==p2)||any(p.Gelb==p2)&&(any(p.Rot==p2)||any(p.Orange==p2))))
-            p.stones(p2,2)=1;
+        elseif(s(p2,2) == 2 && (any(p.Gruen == p2) || any(p.Blau == p2)))           
+            p.stones(p2,2) = 2;
+        elseif s(p2,2) == 2
+            p.stones(p2,2) = 1;   
         end
         
         p3=find(position==3);
@@ -481,8 +458,10 @@ classdef puzzle < handle
             p.stones(p4,2)=0;
         elseif(s(p4,2)==1)
             p.stones(p4,2)=2;
-        elseif((any(p.Weiss==p4)||any(p.Gelb==p4)&&(any(p.Orange==p4)||any(p.Rot==p4))))
-            p.stones(p4,2)=1;
+        elseif(s(p4,2) == 2 && (any(p.Gruen == p4) || any(p.Blau == p4)))           
+            p.stones(p4,2) = 2;
+        elseif s(p4,2) == 2
+            p.stones(p4,2) = 1;
         end    
             
         p5=find(position==12);
@@ -493,15 +472,18 @@ classdef puzzle < handle
             p.stones(p5,2)=0;
         elseif(s(p5,2)==1)
             p.stones(p5,2)=2;
-        elseif((any(p.Weiss==p5)||any(p.Gelb==p5)&&(any(p.Orange==p5)||any(p.Rot==p5))))
-            p.stones(p5,2)=1;
-        end
+        elseif(s(p5,2) == 2 && (any(p.Gruen == p5) || any(p.Blau == p5)))           
+            p.stones(p5,2) = 2;
+        elseif s(p5,2) == 2
+            p.stones(p5,2) = 1;
+        end    
         
         p6=find(position==18);
         p.stones(p6,1)=20;
         if(s(p6,2)==0)
             p.stones(p6,2)=2;
         elseif(s(p6,2)==2)
+
             p.stones(p6,2)=0;
         end
         
@@ -509,12 +491,14 @@ classdef puzzle < handle
         p.stones(p7,1)=12;
         if(s(p7,2)==0)
             p.stones(p7,2)=1;
-        elseif(s(p7,2)==1 && (any(p.Weiss==p7) || any(p.Gelb==p7)))
+        elseif(s(p7,2)==1 && (any(p.Weiss == p7) || any(p.Gelb == p7)))
             p.stones(p7,2)=2;
         elseif(s(p7,2)==1)
             p.stones(p7,2)=0;
-        elseif((any(p.Weiss==p7)||any(p.Gelb==p7)&&(any(p.Rot==p7)||any(p.Orange==p7))))
-            p.stones(p7,2)=1;
+        elseif(s(p7,2) == 2 && (any(p.Gruen == p7) || any(p.Blau == p7)))           
+            p.stones(p7,2) = 2;
+        elseif s(p7,2) == 2
+            p.stones(p7,2) = 1;   
         end
         
         p8=find(position==20);
@@ -529,6 +513,7 @@ classdef puzzle < handle
     function Hn(p)
         s = p.stones;
         position = s(:,1); 
+        
         p1=find(position==9);
         p.stones(p1,1)=26;
         if(s(p1,2)==0)
@@ -545,8 +530,10 @@ classdef puzzle < handle
             p.stones(p2,2)=2;
         elseif(s(p2,2)==1)
             p.stones(p2,2)=0;
-        elseif((any(p.Weiss==p2)||any(p.Gelb==p2)&&(any(p.Rot==p2)||any(p.Orange==p2))))
-            p.stones(p2,2)=1;
+        elseif(s(p2,2) == 2 && (any(p.Gruen == p2) || any(p.Blau == p2)))           
+            p.stones(p2,2) = 2;
+        elseif s(p2,2) == 2
+            p.stones(p2,2) = 1;  
         end
         
         p3=find(position==7);
@@ -565,9 +552,11 @@ classdef puzzle < handle
             p.stones(p4,2)=0;
         elseif(s(p4,2)==1)
             p.stones(p4,2)=2;
-        elseif((any(p.Weiss==p4)||any(p.Gelb==p4)&&(any(p.Orange==p4)||any(p.Rot==p4))))
-            p.stones(p4,2)=1;
-        end    
+        elseif(s(p4,2) == 2 && (any(p.Gruen == p4) || any(p.Blau == p4)))           
+            p.stones(p4,2) = 2;
+        elseif s(p4,2) == 2
+            p.stones(p4,2) = 1;  
+        end
             
         p5=find(position==15);
         p.stones(p5,1)=8;
@@ -577,8 +566,10 @@ classdef puzzle < handle
             p.stones(p5,2)=0;
         elseif(s(p5,2)==1)
             p.stones(p5,2)=2;
-        elseif((any(p.Weiss==p5)||any(p.Gelb==p5)&&(any(p.Orange==p5)||any(p.Rot==p5))))
-            p.stones(p5,2)=1;
+        elseif(s(5,2) == 2 && (any(p.Gruen == p5) || any(p.Blau == p5)))           
+            p.stones(p5,2) = 2;
+        elseif s(p5,2) == 2
+            p.stones(p5,2) = 1;  
         end
         
         p6=find(position==26);
@@ -597,8 +588,10 @@ classdef puzzle < handle
             p.stones(p7,2)=2;
         elseif(s(p7,2)==1)
             p.stones(p7,2)=0;
-        elseif((any(p.Weiss==p7)||any(p.Gelb==p7)&&(any(p.Rot==p7)||any(p.Orange==p7))))
-            p.stones(p7,2)=1;
+        elseif(s(p7,2) == 2 && (any(p.Gruen == p7) || any(p.Blau == p7)))           
+            p.stones(p7,2) = 2;
+        elseif s(p7,2) == 2
+            p.stones(p7,2) = 1;  
         end
         
         p8=find(position==24);

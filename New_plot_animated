@@ -61,6 +61,12 @@ clf
    	       'Tag','pushbutton12','string', 'Hn');
        set(p12,'Callback',@pushbutton12_Callback)
 
+%Slider
+sl = uicontrol(gcf,'Style','Slider',...
+ 	       'Position',[20,20,460,20],...
+ 	       'Tag','myslider');
+     
+set(sl,'Callback',@slider_callback) 
  
 %Rotationsmatrizen
 %Start von Position 9
@@ -488,8 +494,10 @@ import /home/2016/streibls/puzzle.*
 
 end
 
-
+function slider_Callback(hObject, eventdata, handles, gcbo)
+   
+   
+end
 
 
 end
-

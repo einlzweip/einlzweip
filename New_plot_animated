@@ -498,7 +498,7 @@ end
 
 function pushbutton10_Callback(hObject, eventdata, handles)
     if h==0
-        p=puzzle(A)
+        p=puzzle(A);
         Up(p);
         A=p.stones;
         plotcube(A);

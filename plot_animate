@@ -221,28 +221,6 @@ end
 F(j)=getframe;
 j=j+1;
 end
- 
-pl = uicontrol(gcf,'Style','Pushbutton',...
- 	       'Position',[20,50,50,20],...
- 	       'Tag','pushbutton1','string', 'Ln');
-set(pl,'Callback',@pushbutton1_Callback)
 
-p2 = uicontrol(gcf,'Style','Pushbutton',...
- 	       'Position',[80,80,50,20],...
- 	       'Tag','pushbutton2','string', 'Rp');
-set(p2,'Callback',@pushbutton2_Callback)
-
-p3 = uicontrol(gcf,'Style','Pushbutton',...
- 	       'Position',[80,110,50,20],...
- 	       'Tag','pushbutton2','string', 'On');
-set(p3,'Callback',@pushbutton2_Callback)
-
-
-
-sl = uicontrol(gcf,'Style','Slider',...
- 	       'Position',[20,20,460,20],...
- 	       'Tag','myslider');
-set(sl,'Callback',@slider_callback)
 
 end
-

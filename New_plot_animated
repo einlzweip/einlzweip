@@ -1,5 +1,6 @@
 function plotcube(A)
 clf
+
 %buttons
        pl = uicontrol(gcf,'Style','Pushbutton',...
    	       'Position',[20,50,50,20],...
@@ -67,6 +68,15 @@ sl = uicontrol(gcf,'Style','Slider',...
  	       'Tag','myslider');
      
 set(sl,'Callback',@slider_callback) 
+
+%checkbox
+cl = uicontrol(gcf,'Style','checkbox',...
+   	       'Position',[20,230,110,20],...
+   	       'Tag','checkbox1','string', 'Animation ein');
+set(cl,'Callback',@checkbox1_Callback)
+
+%für Animation ein/aus
+h=0;
  
 %Rotationsmatrizen
 %Start von Position 9
@@ -243,7 +253,13 @@ end
 
 
 function pushbutton1_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Ln(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -253,17 +269,24 @@ import /home/2016/streibls/puzzle.*
         plot_animate(A,drehung,LP);        
     end
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Ln(p);
     A=p.stones;
     plotcube(A);
+    
+    end
 
 end
 
 
 function pushbutton2_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Rp(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -274,18 +297,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Rp(p);
     A=p.stones;
     plotcube(A);
+    end
    
-
 end
 
 
 function pushbutton3_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Op(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -296,16 +324,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Op(p);
     A=p.stones;
     plotcube(A);
    
+    end
+
 end
 
 function pushbutton4_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Un(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -316,17 +351,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Un(p);
     A=p.stones;
-    plotcube(A);
-   
+    plotcube(A);   
+
+    end
 
 end
 
 function pushbutton5_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Vn(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -337,17 +378,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Vn(p);
     A=p.stones;
     plotcube(A);
    
+    end
 
 end
 
 function pushbutton6_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Hp(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -358,17 +405,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Hp(p);
     A=p.stones;
     plotcube(A);
-   
+
+    end
 
 end
 
 function pushbutton7_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Lp(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -379,17 +432,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Lp(p);
     A=p.stones;
     plotcube(A);
-   
+
+    end
 
 end
 
 function pushbutton8_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Rn(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -400,17 +459,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Rn(p);
     A=p.stones;
     plotcube(A);
    
+    end
 
 end
 
 function pushbutton9_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);                        
+        On(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -421,18 +486,24 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     On(p);
     A=p.stones;
     plotcube(A);
-   
+    
+    end   
 
 end
 
 
 function pushbutton10_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A)
+        Up(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -443,17 +514,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Up(p);
     A=p.stones;
     plotcube(A);
    
-
+    end
+    
 end
 
 function pushbutton11_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Vp(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -464,17 +541,23 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Vp(p);
     A=p.stones;
     plotcube(A);
-   
+    
+    end
 
 end
 
 function pushbutton12_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
+    if h==0
+        p=puzzle(A);
+        Hn(p);
+        A=p.stones;
+        plotcube(A);
+    elseif h==1
+    import /home/2016/streibls/puzzle.* 
     for a=0:pi/4:pi/2
         p=puzzle(A);
         A = p.stones;
@@ -485,12 +568,12 @@ import /home/2016/streibls/puzzle.*
     end
     
     %Aktualisieren des Würfelzustandes
-    A=p.stones;
-    p=puzzle(A)
+    p=puzzle(A);
     Hn(p);
     A=p.stones;
     plotcube(A);
    
+    end
 
 end
 
@@ -499,5 +582,8 @@ function slider_Callback(hObject, eventdata, handles, gcbo)
    
 end
 
+function checkbox1_Callback(hObject, eventdata, handles)
+h=1;
+end
 
 end

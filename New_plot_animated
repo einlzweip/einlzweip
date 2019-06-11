@@ -1,5 +1,67 @@
 function plotcube(A)
 clf
+%buttons
+       pl = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,50,50,20],...
+   	       'Tag','pushbutton1','string', 'Ln');
+       set(pl,'Callback',@pushbutton1_Callback)
+  
+       p2 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[80,80,50,20],...
+   	       'Tag','pushbutton2','string', 'Rp');
+       set(p2,'Callback',@pushbutton2_Callback)
+  
+       p3 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[80,110,50,20],...
+   	       'Tag','pushbutton3','string', 'Op');
+       set(p3,'Callback',@pushbutton3_Callback)
+       
+       p4 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,140,50,20],...
+   	       'Tag','pushbutton4','string', 'Un');
+       set(p4,'Callback',@pushbutton4_Callback)
+       
+       p5 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,170,50,20],...
+   	       'Tag','pushbutton5','string', 'Vn');
+       set(p5,'Callback',@pushbutton5_Callback)
+       
+       p6 = uicontrol(gcf,'Style','Pushbutton',...
+  	       'Position',[80,200,50,20],...
+  	       'Tag','pushbutton6','string', 'Hp');
+       set(p6,'Callback',@pushbutton6_Callback)
+       
+       p7 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[80,50,50,20],...
+   	       'Tag','pushbutton7','string', 'Lp');
+       set(p7,'Callback',@pushbutton7_Callback)
+       
+       p8 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,80,50,20],...
+   	       'Tag','pushbutton8','string', 'Rn');
+       set(p8,'Callback',@pushbutton8_Callback)
+       
+       p9 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,110,50,20],...
+   	       'Tag','pushbutton9','string', 'On');
+       set(p9,'Callback',@pushbuttonp9_Callback)
+       
+       p10 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[80,140,50,20],...
+   	       'Tag','pushbutton10','string', 'Up');
+       set(p10,'Callback',@pushbutton10_Callback)
+       
+       p11 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[80,170,50,20],...
+   	       'Tag','pushbutton11','string', 'Vp');
+       set(p11,'Callback',@pushbutton11_Callback)
+ 
+       p12 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,200,50,20],...
+   	       'Tag','pushbutton12','string', 'Hn');
+       set(p12,'Callback',@pushbutton12_Callback)
+
+ 
 %Rotationsmatrizen
 %Start von Position 9
 E3=[0,1,0;-1,0,0;0,0,1];
@@ -173,10 +235,6 @@ for i = 1:26
      
 end
 
-pl = uicontrol(gcf,'Style','Pushbutton',...
-       'Position',[20,50,50,20],...
-	       'Tag','pushbutton1','string', 'Ln');
-set(pl,'Callback',@pushbutton1_Callback)
 
 function pushbutton1_Callback(hObject, eventdata, handles)
 import /home/2016/streibls/puzzle.* 
@@ -193,29 +251,10 @@ import /home/2016/streibls/puzzle.*
     p=puzzle(A)
     Ln(p);
     A=p.stones;
-   
-      pl = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[20,50,50,20],...
-  	       'Tag','pushbutton1','string', 'Ln');
-      set(pl,'Callback',@pushbutton1_Callback)
- 
-      p2 = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[80,80,50,20],...
-  	       'Tag','pushbutton2','string', 'Rp');
-      set(p2,'Callback',@pushbutton2_Callback)
- 
-      p3 = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[80,110,50,20],...
-  	       'Tag','pushbutton3','string', 'Op');
-      set(p3,'Callback',@pushbutton3_Callback)
+    plotcube(A);
 
 end
 
-
-p2 = uicontrol(gcf,'Style','Pushbutton',...
- 	       'Position',[80,80,50,20],...
- 	       'Tag','pushbutton2','string', 'Rp');
-set(p2,'Callback',@pushbutton2_Callback)
 
 function pushbutton2_Callback(hObject, eventdata, handles)
 import /home/2016/streibls/puzzle.* 
@@ -233,28 +272,11 @@ import /home/2016/streibls/puzzle.*
     p=puzzle(A)
     Rp(p);
     A=p.stones;
+    plotcube(A);
    
-      pl = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,50,50,20],...
-   	       'Tag','pushbutton1','string', 'Ln');
-      set(pl,'Callback',@pushbutton1_Callback)
-
-      p2 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[80,80,50,20],...
-  	       'Tag','pushbutton2','string', 'Rp');
-      set(p2,'Callback',@pushbutton2_Callback)
- 
-      p3 = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[80,110,50,20],...
-  	       'Tag','pushbutton3','string', 'Op');
-      set(p3,'Callback',@pushbutton3_Callback)
 
 end
 
-p3 = uicontrol(gcf,'Style','Pushbutton',...
- 	       'Position',[80,110,50,20],...
- 	       'Tag','pushbutton3','string', 'Op');
-set(p3,'Callback',@pushbutton3_Callback)
 
 function pushbutton3_Callback(hObject, eventdata, handles)
 import /home/2016/streibls/puzzle.* 
@@ -272,22 +294,202 @@ import /home/2016/streibls/puzzle.*
     p=puzzle(A)
     Op(p);
     A=p.stones;
+    plotcube(A);
    
-      pl = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[20,50,50,20],...
-  	       'Tag','pushbutton1','string', 'Ln');
-      set(pl,'Callback',@pushbutton1_Callback)
- 
-      p2 = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[80,80,50,20],...
-  	       'Tag','pushbutton2','string', 'Rp');
-      set(p2,'Callback',@pushbutton2_Callback)
- 
-      p3 = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[80,110,50,20],...
-  	       'Tag','pushbutton3','string', 'Op');
-      set(p3,'Callback',@pushbutton3_Callback)
+end
+
+function pushbutton4_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[18 19 20 21 22 23 24 25 26];
+        LP=[cos(a) -sin(a) 0; sin(a) cos(a) 0; 0 0 1];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Un(p);
+    A=p.stones;
+    plotcube(A);
+   
 
 end
 
+function pushbutton5_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[1 2 3 10 11 12 18 19 20];
+        LP=[cos(a) 0 sin(a); 0 1 0; -sin(a) 0 cos(a)];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Vn(p);
+    A=p.stones;
+    plotcube(A);
+   
+
 end
+
+function pushbutton6_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[7 8 9 15 16 17 24 25 26];
+        LP=[cos(a) 0 sin(a); 0 1 0; -sin(a) 0 cos(a)];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Hp(p);
+    A=p.stones;
+    plotcube(A);
+   
+
+end
+
+function pushbutton7_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[1 4 7 10 13 15 18 21 24];
+        LP=[1 0 0; 0 cos(a) sin(a); 0 -sin(a) cos(a)];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Lp(p);
+    A=p.stones;
+    plotcube(A);
+   
+
+end
+
+function pushbutton8_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[3 6 9 12 14 17 20 23 26];
+        LP=[1 0 0; 0 cos(a) sin(a); 0 -sin(a) cos(a)];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Rn(p);
+    A=p.stones;
+    plotcube(A);
+   
+
+end
+
+function pushbutton9_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[1 2 3 4 5 6 7 8 9];
+        LP=[cos(a) sin(a) 0; -sin(a) cos(a) 0; 0 0 1];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    On(p);
+    A=p.stones;
+    plotcube(A);
+   
+
+end
+
+
+function pushbutton10_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[18 19 20 21 22 23 24 25 26];
+        LP=[cos(a) sin(a) 0; -sin(a) cos(a) 0; 0 0 1];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Up(p);
+    A=p.stones;
+    plotcube(A);
+   
+
+end
+
+function pushbutton11_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[1 2 3 10 11 12 18 19 20];
+        LP=[cos(a) 0 -sin(a); 0 1 0; sin(a) 0 cos(a)];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Vp(p);
+    A=p.stones;
+    plotcube(A);
+   
+
+end
+
+function pushbutton12_Callback(hObject, eventdata, handles)
+import /home/2016/streibls/puzzle.* 
+    for a=0:pi/4:pi/2
+        p=puzzle(A);
+        A = p.stones;
+        clf;
+        drehung=[7 8 9 15 16 17 24 25 26];
+        LP=[cos(a) 0 -sin(a); 0 1 0; sin(a) 0 cos(a)];
+        plot_animate(A,drehung,LP);        
+    end
+    
+    %Aktualisieren des Würfelzustandes
+    A=p.stones;
+    p=puzzle(A)
+    Hn(p);
+    A=p.stones;
+    plotcube(A);
+   
+
+end
+
+
+
+
+end
+

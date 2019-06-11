@@ -1,38 +1,48 @@
 function random_cube(A)
-p=puzzle(A)
-s=zeros(100,1)
+p=puzzle(A);
+s=zeros(100,1);
 for x=1:100
-    s(x)=randi(12)
+    s(x)=randi(12);
     switch s(x)
-        case 1
-            Lp(p);
-        case 2
-            Rp(p);
-        case 3
-            Ln(p);
-        case 4
-            Rn(p);
-        case 5
-            On(p);
         case 6
-            Op(p);
+            Lp(p);
         case 7
-            Up(p);
+            Rp(p);
+        case 5
+            Ln(p);
         case 8
-            Un(p);
+            Rn(p);
+        case 4
+            On(p);
         case 9
-            Vn(p);
+            Op(p);
+        case 3
+            Up(p);
         case 10
-            Vp(p);
+            Un(p);
+        case 2
+            Vn(p);
         case 11
+            Vp(p);
+        case 1
             Hn(p);
         case 12
             Hp(p);
     end
-    
-end
-clf;
-plot_cube(p.stones);
-s;
 end
 
+clf;
+plotcube(p.stones);
+s
+
+sl = uicontrol(gcf,'Style','Slider',...
+ 	       'Position',[20,20,460,20],...
+ 	       'Tag','myslider');
+     
+ set(sl,'Callback',@slider_callback) 
+ 
+function slider_Callback(hObject, eventdata, handles, gcbo)   
+   
+end
+
+end

@@ -137,7 +137,7 @@ classdef puzzle < handle
             elseif(s(p2,2) == 1 && (any(p.Gruen == p2) || any(p.Blau == p2)))
                 p.stones(p2,2) = 2;
             elseif(s(p2,2) == 1 && (any(p.Rot == p2) || any(p.Orange == p2)))
-                p.stones(p2,2) = 2;
+                p.stones(p2,2) = 0;
             elseif(s(p2,2) == 2 && (any(p.Rot == p2) || any(p.Orange == p2)))
                 p.stones(p2,2) = 2;
             elseif s(p2,2) == 2
@@ -181,7 +181,7 @@ classdef puzzle < handle
             elseif(s(p6,2) == 1 && (any(p.Gruen == p6) || any(p.Blau == p6)))
                 p.stones(p6,2) = 2;
             elseif(s(p6,2) == 1 && (any(p.Rot == p6) || any(p.Orange == p6)))
-                p.stones(p6,2) = 2;
+                p.stones(p6,2) = 0;
             elseif(s(p6,2) == 2 && (any(p.Rot == p6) || any(p.Orange == p6)))
                 p.stones(p6,2) = 2;
             elseif s(p6,2) == 2

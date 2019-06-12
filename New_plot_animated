@@ -260,7 +260,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -287,7 +287,7 @@ function pushbutton2_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -314,7 +314,7 @@ function pushbutton3_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -341,7 +341,7 @@ function pushbutton4_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -368,7 +368,7 @@ function pushbutton5_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -395,7 +395,7 @@ function pushbutton6_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -422,7 +422,7 @@ function pushbutton7_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -449,7 +449,7 @@ function pushbutton8_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -476,7 +476,7 @@ function pushbutton9_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -504,7 +504,7 @@ function pushbutton10_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -531,7 +531,7 @@ function pushbutton11_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;
@@ -558,7 +558,7 @@ function pushbutton12_Callback(hObject, eventdata, handles)
         plotcube(A);
     elseif h==1
     import /home/2016/streibls/puzzle.* 
-    for a=0:pi/4:pi/2
+    for a=0:pi/20:pi/2
         p=puzzle(A);
         A = p.stones;
         clf;

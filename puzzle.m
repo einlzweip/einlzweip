@@ -276,7 +276,7 @@ classdef puzzle < handle
         
         q6=find(position == 8);
         p.stones(q6,1) = 4;
-        if(s(q6) == 0)
+        if(s(q6,2) == 0)
             p.stones(q6,2) = 1;
         elseif(s(q6,2) == 1 && (any(p.Weiss == q6) || any(p.Gelb == q6)))
             p.stones(q6,2) = 0;

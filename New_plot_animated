@@ -167,9 +167,7 @@ for i = 1:26
                 vert = transpose(K12^3 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
             elseif (any(i == 12) && A(i,1)==23)
                 vert = transpose(K12 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (any(i == [10,15,17]) && A(i,1) == 8)
-                vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif (any(i == [4 6]) && A(i,1) == 8)
+            elseif (any(i == [4 6 12 21 23]) && A(i,1) == 8)
                 vert = transpose(E3^3 * transpose(vert) + transpose(T(A(i,1),:) )); 
             elseif (any(i == [2 8 19 25]) && A(i,1) == 15)
                 vert= transpose(E7 * E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));

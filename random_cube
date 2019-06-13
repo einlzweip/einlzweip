@@ -33,7 +33,7 @@ end
 
 clf;
 plotcube(p.stones);
-s
+
 
 sl = uicontrol(gcf,'Style','Slider',...
  	       'Position',[20,20,460,20],...

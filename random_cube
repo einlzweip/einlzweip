@@ -1,5 +1,6 @@
 function random_cube(A)
 p=puzzle(A);
+q = puzzle(A);
 s=zeros(100,1);
 for x=1:100
     s(x)=randi(12);
@@ -35,14 +36,49 @@ clf;
 plotcube(p.stones);
 
 
+
 sl = uicontrol(gcf,'Style','Slider',...
  	       'Position',[20,20,460,20],...
  	       'Tag','myslider');
      
- set(sl,'Callback',@slider_callback) 
+ set(sl,'Callback',@slider_Callback) 
  
-function slider_Callback(hObject, eventdata, handles, gcbo)   
-   
+function slider_Callback(gcbo,dummy)
+    val = get(gcbo,'value')
+    val = floor(val * 100 + 1)
+    for x = 1:val
+    switch s(x)
+        case 6
+            Lp(q);
+        case 7
+            Rp(q);
+        case 5
+            Ln(q);
+        case 8
+            Rn(q);
+        case 4
+            On(q);
+        case 9
+            Op(q);
+        case 3
+            Up(q);
+        case 10
+            Un(q);
+        case 2
+            Vn(q);
+        case 11
+            Vp(q);
+        case 1
+            Hn(q);
+        case 12
+            Hp(q);
+    end
+    end
+    %gcbf = get(gcbo,'Parent');
+    %l = findobj(gcbf,'Tag','myline') 
+    plotcube(q.stones)
+    gcbf = get(gcbo,'Parent')
+    %set(l)
 end
 
 end

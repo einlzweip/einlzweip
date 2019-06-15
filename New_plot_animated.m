@@ -71,6 +71,11 @@ clf
    	       'Position',[80,270,50,20],...
    	       'Tag','pushbutton14','string', 'Zustand');
        set(p14,'Callback',@pushbutton14_Callback)
+       
+       p15 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,300,50,20],...
+   	       'Tag','pushbutton15','string', 'Lösung');
+       set(p15,'Callback',@pushbutton15_Callback)
 
 %Slider
 %sl = uicontrol(gcf,'Style','Slider',...
@@ -611,6 +616,12 @@ end
             A(i,:) = str2num(answer{1});
         end
          plotcube(A)
+    end
+
+    function pushbutton15_Callback(hObject, eventdata, handles)
+        A = zeros(26,2);
+        A(:,1) = 1:26;
+        plotcube(A)
     end
 
 

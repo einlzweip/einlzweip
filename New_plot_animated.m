@@ -61,6 +61,11 @@ clf
    	       'Position',[20,200,50,20],...
    	       'Tag','pushbutton12','string', 'Hn');
        set(p12,'Callback',@pushbutton12_Callback)
+       
+       p13 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[20,270,50,20],...
+   	       'Tag','pushbutton13','string', 'Random');
+       set(p13,'Callback',@pushbutton13_Callback)
 
 %Slider
 sl = uicontrol(gcf,'Style','Slider',...
@@ -172,7 +177,7 @@ for i = 1:26
                 vert = transpose(K12 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
             elseif (any(i == [ 15 17]) && A(i,1) == 8)
                 vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif (any(i == [2 4 6 10 12 17 19 21 23]) && A(i,1) == 8)
+            elseif (any(i == [2 4 6 10 12 17 19 21 23 25]) && A(i,1) == 8)
                 vert = transpose(E3^3 * transpose(vert) + transpose(T(A(i,1),:) )); 
             elseif (any(i == [2 8 19 25]) && A(i,1) == 15)
                 vert= transpose(E7 * E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
@@ -588,5 +593,11 @@ end
 function checkbox1_Callback(hObject, eventdata, handles)
 h=1;
 end
+
+function pushbutton13_Callback(hObject, eventdata, handles)
+    random_cube(A)
+
+end
+
 
 end

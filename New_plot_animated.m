@@ -66,6 +66,11 @@ clf
    	       'Position',[20,270,50,20],...
    	       'Tag','pushbutton13','string', 'Random');
        set(p13,'Callback',@pushbutton13_Callback)
+       
+       p14 = uicontrol(gcf,'Style','Pushbutton',...
+   	       'Position',[80,270,50,20],...
+   	       'Tag','pushbutton14','string', 'Zustand');
+       set(p14,'Callback',@pushbutton14_Callback)
 
 %Slider
 %sl = uicontrol(gcf,'Style','Slider',...
@@ -598,6 +603,15 @@ function pushbutton13_Callback(hObject, eventdata, handles)
     random_cube(A)
 
 end
+
+    function pushbutton14_Callback(hObject, eventdata, handles)
+        A = zeros(26,2);
+        for i = 1:26
+            answer = inputdlg(sprintf('Position und Drehindex von Stein %d', i), 'Würfelzustand', [1 50]);
+            A(i,:) = str2num(answer{1});
+        end
+         plotcube(A)
+    end
 
 
 end

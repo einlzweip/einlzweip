@@ -199,10 +199,12 @@ for i = 1:26
                 vert = transpose(E7^2 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
             elseif (any(i == [10 12]) && A(i,1) == 21)
                 vert = transpose(K12 * E7 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (any(i == 10) && A(i,1) == 4)
+            elseif (any(i == [10 12 15]) && A(i,1) == 4)
                 vert = transpose(E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
             elseif (any(i == 10) && A(i,1) == 23)
                 vert = transpose(K12 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
+            elseif (any(i == 15) && A(i,1) == 2)
+                vert = transpose(E7 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [1 0 0]));
             elseif (any(i == [15 17]) && A(i,1) == 19)
                 vert = transpose(E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
             else
@@ -626,3 +628,5 @@ end
 
 
 end
+
+   

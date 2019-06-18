@@ -302,7 +302,7 @@ classdef puzzle < handle
         p.stones(q8,1) = 2;
         if(s(q8,2) == 0)
             p.stones(q8,2) = 1;
-        elseif(s(q8,2) == 1 && (any(p.Weiss == 8) || any(p.Gelb == q8)))
+        elseif(s(q8,2) == 1 && (any(p.Weiss == q8) || any(p.Gelb == q8)))
             p.stones(q8,2) = 0;
         elseif(s(q8,2) == 1 && (any(p.Rot == q8) || any(p.Orange == q8)))
             p.stones(q8,2) = 2;

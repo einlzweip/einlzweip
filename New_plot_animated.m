@@ -221,15 +221,13 @@ for i = 1:26
             
         if (A(i,2) == 2)
             D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-            if (any(i == [6 12]) && A(i,1) == 8)
-                vert = transpose(E7 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif  (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 2)
+            if  (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 2)
                 vert = transpose(E7 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [1 0 0]));
             elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 4)
                 vert = transpose(E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
             elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 6)
                 vert = transpose(E3^3 * E7 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (any(i == [2 4 6 8 10 19 21 23 25]) && A(i,1) == 8)
+            elseif (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 8)
                 vert = transpose(E7 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
             elseif (any(i == [2 8 10 12 19 25]) && A(i,1) == 10)
                 vert = transpose(E7^2 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));

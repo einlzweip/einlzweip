@@ -483,7 +483,6 @@ classdef puzzle < handle
         if(s(p6,2)==0)
             p.stones(p6,2)=2;
         elseif(s(p6,2)==2)
-
             p.stones(p6,2)=0;
         end
         
@@ -566,7 +565,7 @@ classdef puzzle < handle
             p.stones(p5,2)=0;
         elseif(s(p5,2)==1)
             p.stones(p5,2)=2;
-        elseif(s(5,2) == 2 && (any(p.Gruen == p5) || any(p.Blau == p5)))           
+        elseif(s(p5,2) == 2 && (any(p.Gruen == p5) || any(p.Blau == p5)))           
             p.stones(p5,2) = 2;
         elseif s(p5,2) == 2
             p.stones(p5,2) = 1;  

@@ -1,5 +1,5 @@
 function plotcube(A)
-%Kernklasse, zum Plotten des Würfels
+%Kernfunktion, zum Plotten des Würfels
 %A-Matrix des Würfels
 clf
 

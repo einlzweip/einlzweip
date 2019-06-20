@@ -2,87 +2,80 @@ function plotcube(A)
 clf
 
 %buttons
-       pl = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,50,50,20],...
-   	       'Tag','pushbutton1','string', 'Ln');
-       set(pl,'Callback',@pushbutton1_Callback)
+pl = uicontrol(gcf,'Style','Pushbutton',...
+       'Position',[20,50,50,20],...
+   	'Tag','pushbutton1','string', 'Ln');
+set(pl,'Callback',@pushbutton1_Callback)
   
-       p2 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[80,80,50,20],...
-   	       'Tag','pushbutton2','string', 'Rp');
-       set(p2,'Callback',@pushbutton2_Callback)
+p2 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[80,80,50,20],...
+   	'Tag','pushbutton2','string', 'Rp');
+set(p2,'Callback',@pushbutton2_Callback)
   
-       p3 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[80,110,50,20],...
-   	       'Tag','pushbutton3','string', 'Op');
-       set(p3,'Callback',@pushbutton3_Callback)
+p3 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[80,110,50,20],...
+   	'Tag','pushbutton3','string', 'Op');
+set(p3,'Callback',@pushbutton3_Callback)
        
-       p4 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,140,50,20],...
-   	       'Tag','pushbutton4','string', 'Un');
-       set(p4,'Callback',@pushbutton4_Callback)
+p4 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[20,140,50,20],...
+   	'Tag','pushbutton4','string', 'Un');
+set(p4,'Callback',@pushbutton4_Callback)
        
-       p5 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,170,50,20],...
-   	       'Tag','pushbutton5','string', 'Vn');
-       set(p5,'Callback',@pushbutton5_Callback)
+p5 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[20,170,50,20],...
+   	'Tag','pushbutton5','string', 'Vn');
+set(p5,'Callback',@pushbutton5_Callback)
        
-       p6 = uicontrol(gcf,'Style','Pushbutton',...
-  	       'Position',[80,200,50,20],...
-  	       'Tag','pushbutton6','string', 'Hp');
-       set(p6,'Callback',@pushbutton6_Callback)
+p6 = uicontrol(gcf,'Style','Pushbutton',...
+  	'Position',[80,200,50,20],...
+  	'Tag','pushbutton6','string', 'Hp');
+set(p6,'Callback',@pushbutton6_Callback)
        
-       p7 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[80,50,50,20],...
-   	       'Tag','pushbutton7','string', 'Lp');
-       set(p7,'Callback',@pushbutton7_Callback)
+p7 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[80,50,50,20],...
+   	'Tag','pushbutton7','string', 'Lp');
+set(p7,'Callback',@pushbutton7_Callback)
        
-       p8 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,80,50,20],...
-   	       'Tag','pushbutton8','string', 'Rn');
-       set(p8,'Callback',@pushbutton8_Callback)
+p8 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[20,80,50,20],...
+   	'Tag','pushbutton8','string', 'Rn');
+set(p8,'Callback',@pushbutton8_Callback)
        
-       p9 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,110,50,20],...
-   	       'Tag','pushbutton9','string', 'On');
-       set(p9,'Callback',@pushbutton9_Callback)
+p9 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[20,110,50,20],...
+   	'Tag','pushbutton9','string', 'On');
+set(p9,'Callback',@pushbutton9_Callback)
        
-       p10 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[80,140,50,20],...
-   	       'Tag','pushbutton10','string', 'Up');
-       set(p10,'Callback',@pushbutton10_Callback)
+p10 = uicontrol(gcf,'Style','Pushbutton',...
+       'Position',[80,140,50,20],...
+   	'Tag','pushbutton10','string', 'Up');
+set(p10,'Callback',@pushbutton10_Callback)
        
-       p11 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[80,170,50,20],...
-   	       'Tag','pushbutton11','string', 'Vp');
-       set(p11,'Callback',@pushbutton11_Callback)
+p11 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[80,170,50,20],...
+   	'Tag','pushbutton11','string', 'Vp');
+set(p11,'Callback',@pushbutton11_Callback)
  
-       p12 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,200,50,20],...
-   	       'Tag','pushbutton12','string', 'Hn');
-       set(p12,'Callback',@pushbutton12_Callback)
+p12 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[20,200,50,20],...
+   	'Tag','pushbutton12','string', 'Hn');
+set(p12,'Callback',@pushbutton12_Callback)
        
-       p13 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,270,50,20],...
-   	       'Tag','pushbutton13','string', 'Random');
-       set(p13,'Callback',@pushbutton13_Callback)
+p13 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[20,270,50,20],...
+   	'Tag','pushbutton13','string', 'Random');
+set(p13,'Callback',@pushbutton13_Callback)
        
-       p14 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[80,270,50,20],...
-   	       'Tag','pushbutton14','string', 'Zustand');
-       set(p14,'Callback',@pushbutton14_Callback)
+p14 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[80,270,50,20],...
+   	'Tag','pushbutton14','string', 'Zustand');
+set(p14,'Callback',@pushbutton14_Callback)
        
-       p15 = uicontrol(gcf,'Style','Pushbutton',...
-   	       'Position',[20,300,50,20],...
-   	       'Tag','pushbutton15','string', 'Lösung');
-       set(p15,'Callback',@pushbutton15_Callback)
-
-%Slider
-%sl = uicontrol(gcf,'Style','Slider',...
-% 	       'Position',[20,20,460,20],...
-% 	       'Tag','myslider');
-     
-%set(sl,'Callback',@slider_callback) 
+p15 = uicontrol(gcf,'Style','Pushbutton',...
+   	'Position',[20,300,50,20],...
+   	'Tag','pushbutton15','string', 'Lösung');
+set(p15,'Callback',@pushbutton15_Callback)
 
 %checkbox
 cl = uicontrol(gcf,'Style','checkbox',...
@@ -106,7 +99,6 @@ R1={E3^2,E3,E3^2*E7,E3^2,eye(3),eye(3),E7,E7*K12^3,eye(3),E3*K12,K12,K12*E3*E7*K
 R2={E3^2,E3,K12,E3^2,eye(3),eye(3),E3^2*K12,E3^3,eye(3),E3*K12,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,K12*E3^2,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,K12^3};
 T = [1 1 2; 1 1 2; 2 1 2; 1 2 2; 1 1 2; 2 1 2; 1 2 2; 2 2 2; 2 2 2; 1 1 1; 1 1 1; 2 1 2; 1 2 1; 2 1 1; 1 2 1; 1 2 2; 2 2 2; 1 1 1; 2 1 1; 2 1 1; 1 1 1; 1 2 1; 2 2 1; 1 2 1; 1 2 1; 2 2 1]-1.5;   
 
-%figure()
 hold on
 %Eckpunkte
 vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
@@ -120,6 +112,7 @@ Color_stones = [6 3 4; 6 4 0; 6 4 1; 6 3 0; 6 0 0; 6 1 0; 6 2 3; 6 2 0; 6 1 2; 3
 2 1 0; 5 4 3; 5 4 0; 5 1 4; 5 3 0; 5 0 0; 5 1 0; 5 3 2; 5 2 0; 5 2 1];
 set(gca,'visible','off');    
 for i = 1:26
+     
      %Ecken
      if(any(i == [1 3 7 9 18 20 24 26]))
          
@@ -153,8 +146,8 @@ for i = 1:26
              vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
          end
      end
-        %Kanten
         
+        %Kanten
     if(any(i == [2 4 6 8 10 12 15 17 19 21 23 25]))
             
         if (A(i,2) == 0)
@@ -170,7 +163,6 @@ for i = 1:26
                 vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
             end
             D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-            
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -211,7 +203,6 @@ for i = 1:26
                 vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));    
             end
             D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-    
             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
             view(3)
             axis vis3d
@@ -270,12 +261,16 @@ for i = 1:26
 end
 
 
+%Funktionsweise der Buttons
+%Ln
 function pushbutton1_Callback(hObject, eventdata, handles)
+    %ohne Animation
     if h==0
         p=puzzle(A);
         Ln(p);
         A=p.stones;
         plotcube(A);
+    %mit Animation
     elseif h==1
     import /home/2016/streibls/puzzle.* 
     for a=0:pi/20:pi/2
@@ -291,12 +286,10 @@ function pushbutton1_Callback(hObject, eventdata, handles)
     Ln(p);
     A=p.stones;
     plotcube(A);
-    
     end
-
 end
 
-
+%Rp
 function pushbutton2_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -313,17 +306,15 @@ function pushbutton2_Callback(hObject, eventdata, handles)
         LP=[1 0 0; 0 cos(a) -sin(a); 0 sin(a) cos(a)];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Rp(p);
     A=p.stones;
     plotcube(A);
     end
-   
 end
 
-
+%Op
 function pushbutton3_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -340,17 +331,15 @@ function pushbutton3_Callback(hObject, eventdata, handles)
         LP=[cos(a) -sin(a) 0; sin(a) cos(a) 0; 0 0 1];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Op(p);
     A=p.stones;
     plotcube(A);
-   
     end
-
 end
 
+%Un
 function pushbutton4_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -367,17 +356,15 @@ function pushbutton4_Callback(hObject, eventdata, handles)
         LP=[cos(a) -sin(a) 0; sin(a) cos(a) 0; 0 0 1];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Un(p);
     A=p.stones;
     plotcube(A);   
-
     end
-
 end
 
+%Vn
 function pushbutton5_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -394,17 +381,15 @@ function pushbutton5_Callback(hObject, eventdata, handles)
         LP=[cos(a) 0 sin(a); 0 1 0; -sin(a) 0 cos(a)];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Vn(p);
     A=p.stones;
     plotcube(A);
-   
     end
-
 end
 
+%Hp
 function pushbutton6_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -421,17 +406,15 @@ function pushbutton6_Callback(hObject, eventdata, handles)
         LP=[cos(a) 0 sin(a); 0 1 0; -sin(a) 0 cos(a)];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Hp(p);
     A=p.stones;
     plotcube(A);
-
     end
-
 end
 
+%Lp
 function pushbutton7_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -448,17 +431,15 @@ function pushbutton7_Callback(hObject, eventdata, handles)
         LP=[1 0 0; 0 cos(a) sin(a); 0 -sin(a) cos(a)];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Lp(p);
     A=p.stones;
     plotcube(A);
-
     end
-
 end
 
+%Rn
 function pushbutton8_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -475,17 +456,15 @@ function pushbutton8_Callback(hObject, eventdata, handles)
         LP=[1 0 0; 0 cos(a) sin(a); 0 -sin(a) cos(a)];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Rn(p);
     A=p.stones;
     plotcube(A);
-   
     end
-
 end
 
+%On
 function pushbutton9_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);                        
@@ -502,18 +481,15 @@ function pushbutton9_Callback(hObject, eventdata, handles)
         LP=[cos(a) sin(a) 0; -sin(a) cos(a) 0; 0 0 1];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     On(p);
     A=p.stones;
     plotcube(A);
-    
-    end   
-
+    end
 end
 
-
+%Up
 function pushbutton10_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -530,17 +506,15 @@ function pushbutton10_Callback(hObject, eventdata, handles)
         LP=[cos(a) sin(a) 0; -sin(a) cos(a) 0; 0 0 1];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Up(p);
     A=p.stones;
     plotcube(A);
-   
     end
-    
 end
 
+%Vp
 function pushbutton11_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -557,17 +531,15 @@ function pushbutton11_Callback(hObject, eventdata, handles)
         LP=[cos(a) 0 -sin(a); 0 1 0; sin(a) 0 cos(a)];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Vp(p);
     A=p.stones;
     plotcube(A);
-    
     end
-
 end
 
+%Hn
 function pushbutton12_Callback(hObject, eventdata, handles)
     if h==0
         p=puzzle(A);
@@ -584,15 +556,12 @@ function pushbutton12_Callback(hObject, eventdata, handles)
         LP=[cos(a) 0 -sin(a); 0 1 0; sin(a) 0 cos(a)];
         plot_animate(A,drehung,LP);        
     end
-    
     %Aktualisieren des Würfelzustandes
     p=puzzle(A);
     Hn(p);
     A=p.stones;
     plotcube(A);
-   
     end
-
 end
 
 function slider_Callback(hObject, eventdata, handles, gcbo)
@@ -600,31 +569,31 @@ function slider_Callback(hObject, eventdata, handles, gcbo)
    
 end
 
+%checkbox Animation
 function checkbox1_Callback(hObject, eventdata, handles)
 h=1;
 end
 
+%zufälliger Würfel
 function pushbutton13_Callback(hObject, eventdata, handles)
     random_cube(A)
-
 end
 
-    function pushbutton14_Callback(hObject, eventdata, handles)
-        A = zeros(26,2);
-        for i = 1:26
-            answer = inputdlg(sprintf('Position und Drehindex von Stein %d', i), 'Würfelzustand', [1 50]);
-            A(i,:) = str2num(answer{1});
-        end
-         plotcube(A)
+%Würfel eingeben
+function pushbutton14_Callback(hObject, eventdata, handles)
+    A = zeros(26,2);
+    for i = 1:26
+        answer = inputdlg(sprintf('Position und Drehindex von Stein %d', i), 'Würfelzustand', [1 50]);
+        A(i,:) = str2num(answer{1});
     end
-
-    function pushbutton15_Callback(hObject, eventdata, handles)
-        A = zeros(26,2);
-        A(:,1) = 1:26;
-        plotcube(A)
-    end
-
-
+    plotcube(A)
 end
 
-   
+%gelöster Würfel
+function pushbutton15_Callback(hObject, eventdata, handles)
+    A = zeros(26,2);
+    A(:,1) = 1:26;
+    plotcube(A)
+end
+
+end

@@ -1,5 +1,6 @@
 function random_cube(A)
 %Erzeugung eines zufälligen Würfels
+%A-Würfel, von dem wir ausgehen (normalerweise der gelöste Würfel)
 
     p=puzzle(A);
     s=zeros(100,1);

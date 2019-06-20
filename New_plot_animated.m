@@ -113,7 +113,7 @@ Color_stones = [6 3 4; 6 4 0; 6 4 1; 6 3 0; 6 0 0; 6 1 0; 6 2 3; 6 2 0; 6 1 2; 3
 set(gca,'visible','off');    
 for i = 1:26
      
-     %Ecken
+        %Ecken
      if(any(i == [1 3 7 9 18 20 24 26]))
          
          if (A(i,2) == 0)

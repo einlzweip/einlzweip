@@ -1,7 +1,7 @@
 classdef puzzle < handle
-    %Puzzleklasse
+    %Würfelklasse
     
-    %Zuständ des Würfels
+    %Zustand des Würfels
     properties
         stones;
     end

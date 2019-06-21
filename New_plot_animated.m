@@ -566,11 +566,6 @@ function pushbutton12_Callback(hObject, eventdata, handles)
     end
 end
 
-function slider_Callback(hObject, eventdata, handles, gcbo)
-   
-   
-end
-
 %checkbox Animation
 function checkbox1_Callback(hObject, eventdata, handles)
 h=1;

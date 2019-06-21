@@ -96,9 +96,11 @@ E7=[0,0,-1;0,1,0;1,0,0];
 %Start von Position 6
 K12=[1,0,0;0,0,-1;0,1,0];
 
+%Liste der Drehmatrizen
 R={E3^2,E3,E3,E3^2,eye(3),eye(3),E3^3,E3^3,eye(3),K12*E3^2,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,E3*E20,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,E3^3*E20};
 R1={E3^2,E3,E3^2*E7,E3^2,eye(3),eye(3),E7,E7*K12^3,eye(3),E3*K12,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,K12^2*E7,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,E7^3};
 R2={E3^2,E3,K12,E3^2,eye(3),eye(3),E3^2*K12,E3^3,eye(3),E3*K12,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,K12*E3^2,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,K12^3};
+%Translationsvektoren
 T = [1 1 2; 1 1 2; 2 1 2; 1 2 2; 1 1 2; 2 1 2; 1 2 2; 2 2 2; 2 2 2; 1 1 1; 1 1 1; 2 1 2; 1 2 1; 2 1 1; 1 2 1; 1 2 2; 2 2 2; 1 1 1; 2 1 1; 2 1 1; 1 1 1; 1 2 1; 2 2 1; 1 2 1; 1 2 1; 2 2 1]-1.5;   
 
 hold on
@@ -109,25 +111,30 @@ fac = [1 2 6 5;2 3 7 6;3 4 8 7;4 1 5 8;1 2 3 4;5 6 7 8];
 %Farben
 C = [1 0.5 0; 0 0 1; 1 0 0; 0 1 0; 1 1 1; 1 1 0];
 
+%Farben der Steine
 %    1 orange; 2 blau; 3 rot; 4 gruen; 5 weiss; 6 gelb
 Color_stones = [6 3 4; 6 4 0; 6 4 1; 6 3 0; 6 0 0; 6 1 0; 6 2 3; 6 2 0; 6 1 2; 3 4 0; 4 0 0; 1 4 0; 3 0 0; 1 0 0; 2 3 0; 2 0 0;
 2 1 0; 5 4 3; 5 4 0; 5 1 4; 5 3 0; 5 0 0; 5 1 0; 5 3 2; 5 2 0; 5 2 1];
+%Koordinatensystem unsichtbar
 set(gca,'visible','off');    
 for i = 1:26
      
         %Ecken
      if(any(i == [1 3 7 9 18 20 24 26]))
-         
+         %Drehindex 0
          if (A(i,2) == 0)
+             %Stein bemalen
              D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+             %Rotieren und Verschieben
              vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
+             %Stein erzeugen
              patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
              view(3)
              axis vis3d
              hold on
              vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
          end
-             
+         %Drehindex 1    
          if (A(i,2) == 1)
              D = [0 0 0; C(Color_stones(i,3),:); C(Color_stones(i,1),:); 0 0 0; 0 0 0; C(Color_stones(i,2),:)];
              vert = transpose( R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
@@ -137,7 +144,7 @@ for i = 1:26
              hold on
              vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
          end
-             
+         %Drehindex 2    
          if (A(i,2) == 2)
              D = [0 0 0; C(Color_stones(i,1),:); C(Color_stones(i,2),:); 0 0 0; 0 0 0; C(Color_stones(i,3),:)];
              vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
@@ -573,6 +580,8 @@ end
 
 %zufälliger Würfel
 function pushbutton13_Callback(hObject, eventdata, handles)
+    A=zeros(26,2);
+    A(:,1)=1:26;
     random_cube(A)
 end
 

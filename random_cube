@@ -6,9 +6,9 @@ function random_cube(A)
     s=zeros(100,1);
     
     for x=1:100
-        %Erzeugung von Zufallszahlen
+        %Erzeugung von Zufallszahlen von 1 bis 12
         s(x)=randi(12);
-        %Drehungen entsprechen Zufallszahlen
+        %Drehungen entsprechend Zufallszahlen
         switch s(x)
             case 6
                 Lp(p);

@@ -1,0 +1,32 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jun 24 12:59:10 2019
+
+@author: schollpp
+"""
+
+import numpy as np
+
+data = np.genfromtxt("bananas-1-2d.test.csv", delimiter = ",")
+x = np.array([0.5,0.5])
+k = 10
+
+values = []
+for i in range(k):
+    a = (data[i,1] - x[0])**2 + (data[i,2] - x[1])**2
+    values.append((a,i))
+dtype = [("Abstand" , float), ("Zeile", int)]
+Abstand = np.array(values, dtype=dtype)
+Abstand = np.sort(Abstand, order = "Abstand")
+for i in np.arange(k-1,np.size(data, axis = 0),1):
+    a = (data[i,1] - x[0])**2 + (data[i,2] - x[1])**2
+    for j in range(k):
+        if a < Abstand[j][0]:
+            for m in np.arange(k-1,j,-1):
+                Abstand[m] = Abstand[m-1]
+            Abstand[j] = (a,i)
+        break
+    
+print Abstand
+    

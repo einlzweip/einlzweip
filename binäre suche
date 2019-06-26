@@ -1,0 +1,16 @@
+for i in np.arange(k-1,np.size(D, axis = 0),1):
+        a = d(x,D[i,:])
+        j=int(k/2)
+        u=0
+        o=k-1
+        while j>0:
+            if(a<Abstand[u+j-1][0]):
+                o=o-j
+            else:
+                u=u+j
+            if(o-u==j):
+                j=int(j/2)
+            else:
+                j=int(j/2)+1
+        Abstand[u+1:k] = Abstand[u:k-1]
+        Abstand[u]=(a,i)

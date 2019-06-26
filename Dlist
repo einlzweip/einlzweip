@@ -1,0 +1,15 @@
+import numpy as np
+data = np.genfromtxt("bananas-1-2d.test.csv", delimiter = ",")
+
+x=np.size(data, axis = 0)
+l=17
+K=np.arange(10,21,1)
+m=x % l
+a=0
+D=[]
+for i in range(m):
+    D.append(data[a:a+x/l+1,0:3])
+    a=a+x/l+1
+for i in range(l-m):
+    D.append(data[a:a+x/l,0:3])
+    a=a+x/l

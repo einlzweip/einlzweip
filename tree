@@ -1,0 +1,30 @@
+import numpy as np
+
+class tree:
+    node left
+    node right
+    
+    def __init__(self,aleft,aright):
+        self.left=aleft
+        self.right=aright
+       
+
+class node:
+    node left
+    node right
+    node parent
+    points
+    
+    def __init__(self,aparent):
+        self.parent=aparent
+        self.left = None
+        self.right= None
+        points= None
+        
+        
+    def setChildren(self,aleft,aright):
+        self.left=aleft
+        self.right=aright
+    
+    def addpoint(self, apoint):
+        self.point += apoint

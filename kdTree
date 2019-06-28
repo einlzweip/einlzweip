@@ -1,0 +1,72 @@
+import collections
+import itertools
+import math
+import numpy as np
+
+data = np.genfromtxt("bananas-1-2d.test.csv", delimiter = ",")
+
+def square_distance(a, b):
+    s = 0
+    for x, y in itertools.izip(a, b):
+        d = x - y
+        s += d * d
+    return s
+
+def d(x,b):
+    n = np.size(x)
+    s = 0
+    for i in np.arange(1,n,1):
+        s = s + (x[i] - b[i])**2
+    return s
+
+Node = collections.namedtuple("Node", 'point axis left right')
+
+x = [1,0.5,0.5]
+
+class KDTree(object):
+    def __init__(self, k, destination, objects=[]):
+
+        def build_tree(objects, axis=1):
+
+            if not objects:
+                return None
+
+            objects.sort(key=lambda o: o[axis])
+            median_idx = len(objects) // 2
+            median_point = objects[median_idx]
+
+            next_axis = (((axis + 1) % k) + (axis % 2) * 2)
+            return Node(median_point, axis,
+                        build_tree(objects[:median_idx], next_axis),
+                        build_tree(objects[median_idx + 1:], next_axis))
+
+        self.root = build_tree(list(objects))
+        
+        def nearest_neighbor(self, destination):
+
+            best = [None, float(1000)]
+            def recursive_search(here):
+
+                if here is None:
+                    return
+                point, axis, left, right = here
+                here_sd = d(point, destination)
+                if here_sd < best[1]:
+                    best[:] = point, here_sd
+
+                diff = destination[axis] - point[axis]
+                close, away = (left, right) if diff <= 0 else (right, left)
+
+                recursive_search(close)
+                if diff ** 2 < best[1]:
+                    recursive_search(away)
+
+            recursive_search(self.root)
+            return best[0], math.sqrt(best[1])
+        self.nearest_neighbor = nearest_neighbor(self, destination) 
+        
+        
+        
+A = KDTree(2,x,data)
+print A.root
+print A.nearest_neighbor

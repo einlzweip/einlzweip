@@ -1,3 +1,11 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jul  1 12:01:48 2019
+
+@author: schollpp
+"""
+
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jul  1 11:03:45 2019
@@ -6,157 +14,142 @@ Created on Mon Jul  1 11:03:45 2019
 """
 
 import collections
-
 import itertools
-
 import math
-
 import numpy as np
-
-
 
 data = np.genfromtxt("bananas-1-2d.test.csv", delimiter = ",")
 
-
-
 def square_distance(a, b):
-
     s = 0
-
     for x, y in itertools.izip(a, b):
-
         d = x - y
-
         s += d * d
-
     return s
-
-
 
 def d(x,b):
-
     n = np.size(x)
-
     s = 0
-
     for i in np.arange(1,n,1):
-
         s = s + (x[i] - b[i])**2
-
     return s
-
-
 
 Node = collections.namedtuple("Node", 'point axis left right')
 
-
-
+l=5
+e=10
 x = [1,0.5,0.5]
 
+class KDTree(object):    
+    def __init__(self, k, e, destination, objects):
 
-
-class KDTree(object):
-    
-    def __init__(self, k, destination, objects):
-
-
-
-        def build_tree(objects, axis=1):
-
-
+        def build_tree(objects, bxis=1):
 
             if not objects:
-
                 return None
 
-
-
-            objects.sort(key=lambda o: o[axis])
-
+            objects.sort(key=lambda o: o[bxis])
             median_idx = len(objects) // 2
-
             median_point = objects[median_idx]
 
-
-
-            next_axis = (((axis + 1) % k) + (axis % 2) * 2)
-
-            return Node(median_point, axis,
-
+            next_axis = (((bxis + 1) % k) + (bxis % 2) * 2)
+            return Node(median_point, bxis,
                         build_tree(objects[:median_idx], next_axis),
-
                         build_tree(objects[median_idx + 1:], next_axis))
 
-
-
-        self.root = build_tree(list(objects))
-
-        
+        self.root = build_tree(list(objects))        
 
         def nearest_neighbor(self, destination):
 
-
-
             best = []
-            for i in range(k):
+            for i in range(e):
                 best.append([0,2*k])
 
             def recursive_search(here):
 
-
-
                 if here is None:
-
                     return
 
-                point, axis, left, right = here
-
+                point, bxis, left, right = here
                 here_sd = d(point, destination)
+                if here_sd < best[e-1][1]:
+                    for f in range(e):
+                        if(here_sd < best[f][1]):
+                            best[f+1:e] = best[f:e-1]
+                            best[f]=[point,here_sd]
+                            break
+#                    j=int(e/2)
+#                    u=0
+#                    o=e-1
+#                    while j>0:
+#                        if(here_sd<best[u+j-1][1]):
+#                            o=o-j
+#                        else:
+#                            u=u+j
+#                        if(o-u==j):
+#                            j=int(j/2)
+#                        else:
+#                            j=int(j/2)+1
+#                        best[u+1:e] = best[u:e-1]
+#                        best[u]=[here_sd]
 
-                if here_sd < best[k-1][1]:
-                    j=int(k/2)
-                    u=0
-                    o=k-1
-                    while j>0:
-                        if(here_sd<best[u+j-1][1]):
-                            o=o-j
-                        else:
-                            u=u+j
-                        if(o-u==j):
-                            j=int(j/2)
-                        else:
-                            j=int(j/2)+1
-                        best[u+1:k] = best[u:k-1]
-                        #best[u]=[i,here_sd]
-
-                diff = destination[axis] - point[axis]
-
+                diff = destination[bxis] - point[bxis]
                 close, away = (left, right) if diff <= 0 else (right, left)
 
-
-
                 recursive_search(close)
-
-                if diff ** 2 < best[k-1][1]:
+                if diff ** 2 < best[e-1][1]:
 
                     recursive_search(away)
 
-
-
             recursive_search(self.root)
-
-            return best[0], math.sqrt(best[1])
-
+            return best
         self.nearest_neighbor = nearest_neighbor(self, destination) 
 
         
 
-        
 
-        
+def f_Dg(D,e,x):
+    A = KDTree(2,e,x,D)
+    Ab = A.nearest_neighbor
+    s = 0
+    for i in range(e):
+        s = Ab[i][0][0] + s
+    f_Df=0
+    if s == 0:
+        f_Df = 1
+    else:
+        f_Df = np.sign(s)
+    return f_Df
 
-A = KDTree(2,x,data)
+b=np.size(data, axis = 0)
+K=np.arange(10,21,1)
+m=b % l
+a=0
+D=[]
+for i in range(m):
+    D.append(data[a:a+b/l+1,0:3])
+    a=a+b/l+1
+for i in range(l-m):
+    D.append(data[a:a+b/l,0:3])
+    a=a+b/l
 
-print (A.root)
-
-print (A.nearest_neighbor)
+i=3
+Di=np.zeros((b-np.size(D[i],axis=0),3))
+a=0
+for j in range(l):
+    if (not j == i):
+        Di[a:a+np.size(D[j],axis=0),0:3]=D[j]
+        a=a+np.size(D[j],axis=0)
+A = KDTree(2,e,x,Di)
+KDi=A.nearest_neighbor
+f = 0
+falsi=[]
+for j in range(np.size(D[i], axis = 0)):
+    s = f_Dg(Di,e,[1,D[i][j,1],D[i][j,2]])
+    if(j==305):
+        A = KDTree(2,e,D[i][j,:],Di)
+        Ab = A.nearest_neighbor
+        print(Ab)
+    if (not s == D[i][j,0]):
+        f = f + 1
+        falsi.append(j)

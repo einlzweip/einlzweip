@@ -17,8 +17,11 @@ import collections
 import itertools
 import math
 import numpy as np
+import time
 
-data = np.genfromtxt("bananas-1-2d.test.csv", delimiter = ",")
+data = np.genfromtxt("toy-10d.test.csv", delimiter = ",")
+
+tic=time.time()
 
 def square_distance(a, b):
     s = 0
@@ -35,13 +38,13 @@ def d(x,b):
     return s
 
 Node = collections.namedtuple("Node", 'point axis left right')
-
+k=np.size(data,axis=1)-1
 l=5
-e=10
-x = [1,0.5,0.5]
+K=np.arange(80,81,1)
+#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
 
 class KDTree(object):    
-    def __init__(self, k, e, destination, objects):
+    def __init__(self, k, objects):
 
         def build_tree(objects, bxis=1):
 
@@ -52,32 +55,32 @@ class KDTree(object):
             median_idx = len(objects) // 2
             median_point = objects[median_idx]
 
-            next_axis = (((bxis + 1) % k) + (bxis % 2) * 2)
+            next_axis = bxis % k + 1 #(((bxis + 1) % k) + (bxis % 2) * 2)
             return Node(median_point, bxis,
                         build_tree(objects[:median_idx], next_axis),
                         build_tree(objects[median_idx + 1:], next_axis))
 
         self.root = build_tree(list(objects))        
 
-        def nearest_neighbor(self, destination):
+    def nearest_neighbor(self, k, e, destination):
 
-            best = []
-            for i in range(e):
-                best.append([0,2*k])
+        best = []
+        for i in range(e):
+            best.append([0,2*k])
 
-            def recursive_search(here):
+        def recursive_search(here):
 
-                if here is None:
-                    return
+            if here is None:
+                return
 
-                point, bxis, left, right = here
-                here_sd = d(point, destination)
-                if here_sd < best[e-1][1]:
-                    for f in range(e):
-                        if(here_sd < best[f][1]):
-                            best[f+1:e] = best[f:e-1]
-                            best[f]=[point,here_sd]
-                            break
+            point, bxis, left, right = here
+            here_sd = d(point, destination)
+            if here_sd < best[e-1][1]:
+                for f in range(e):
+                    if(here_sd < best[f][1]):
+                        best[f+1:e] = best[f:e-1]
+                        best[f]=[point,here_sd]
+                        break
 #                    j=int(e/2)
 #                    u=0
 #                    o=e-1
@@ -93,24 +96,23 @@ class KDTree(object):
 #                        best[u+1:e] = best[u:e-1]
 #                        best[u]=[here_sd]
 
-                diff = destination[bxis] - point[bxis]
-                close, away = (left, right) if diff <= 0 else (right, left)
+            diff = destination[bxis] - point[bxis]
+            close, away = (left, right) if diff <= 0 else (right, left)
 
-                recursive_search(close)
-                if diff ** 2 < best[e-1][1]:
+            recursive_search(close)
+            if diff ** 2 < best[e-1][1]:
 
-                    recursive_search(away)
+                recursive_search(away)
 
-            recursive_search(self.root)
-            return best
-        self.nearest_neighbor = nearest_neighbor(self, destination) 
+        recursive_search(self.root)
+        return best
+        #self.nearest_neighbor = nearest_neighbor(self, destination) 
 
         
 
 
-def f_Dg(D,e,x):
-    A = KDTree(2,e,x,D)
-    Ab = A.nearest_neighbor
+def f_Dg(A,e,x):
+    Ab = A.nearest_neighbor(k,e,x)
     s = 0
     for i in range(e):
         s = Ab[i][0][0] + s
@@ -122,34 +124,56 @@ def f_Dg(D,e,x):
     return f_Df
 
 b=np.size(data, axis = 0)
-K=np.arange(10,21,1)
+#K=np.arange(10,21,1)
 m=b % l
 a=0
 D=[]
 for i in range(m):
-    D.append(data[a:a+b/l+1,0:3])
+    D.append(data[a:a+b/l+1,:])
     a=a+b/l+1
 for i in range(l-m):
-    D.append(data[a:a+b/l,0:3])
+    D.append(data[a:a+b/l,:])
     a=a+b/l
-
-i=3
-Di=np.zeros((b-np.size(D[i],axis=0),3))
-a=0
-for j in range(l):
-    if (not j == i):
-        Di[a:a+np.size(D[j],axis=0),0:3]=D[j]
-        a=a+np.size(D[j],axis=0)
-A = KDTree(2,e,x,Di)
-KDi=A.nearest_neighbor
-f = 0
-falsi=[]
-for j in range(np.size(D[i], axis = 0)):
-    s = f_Dg(Di,e,[1,D[i][j,1],D[i][j,2]])
-    if(j==305):
-        A = KDTree(2,e,D[i][j,:],Di)
-        Ab = A.nearest_neighbor
-        print(Ab)
-    if (not s == D[i][j,0]):
-        f = f + 1
-        falsi.append(j)
+h=1
+de=0
+A=[]
+for i in range(l):        
+    Di=np.zeros((b-np.size(D[i],axis=0),k+1))
+    a=0
+    for j in range(l):
+        if (not j == i):
+            Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
+            a=a+np.size(D[j],axis=0)
+    A.append(KDTree(k,Di))
+for e in K:
+    g=float(0)
+    for i in range(l):
+#        Di=np.zeros((b-np.size(D[i],axis=0),3))
+#        a=0
+#        for j in range(l):
+#            if (not j == i):
+#                Di[a:a+np.size(D[j],axis=0),0:3]=D[j]
+#                a=a+np.size(D[j],axis=0)
+#        A = KDTree(2,Di)
+#        KDi=A[i].nearest_neighbor(k,e,x)
+#        KDi=A.nearest_neighbor(2,e,x)
+        f = float(0)
+        for j in range(np.size(D[i], axis = 0)):
+            s = f_Dg(A[i],e,D[i][j,:])
+#            s = f_Dg(A,e,[1,D[i][j,1],D[i][j,2]])
+##    if(j==305):
+# #       A = KDTree(2,e,D[i][j,:],Di)
+#  #      Ab = A.nearest_neighbor
+#   #     print(Ab)
+            if (not s == D[i][j,0]):
+                f = f + 1
+   #     #falsi.append(j)
+        f=f/np.size(D[i],axis=0)
+        g+=f
+    g=g/l
+    print(g)
+    if(g<h):
+        h=g
+        de=e
+toc=time.time()
+print(toc-tic)

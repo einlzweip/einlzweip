@@ -20,6 +20,10 @@ import numpy as np
 import time
 
 data = np.genfromtxt("toy-10d.test.csv", delimiter = ",")
+#zufällige Durchmischung der Datentabelle
+B=np.random.permutation(np.size(data,axis=0))
+for i in range(np.size(data,axis=0)):
+    data[i]=data[B[i]]
 
 tic=time.time()
 

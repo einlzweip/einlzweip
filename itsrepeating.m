@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
@@ -19,7 +20,8 @@ import math
 import numpy as np
 import time
 
-data = np.genfromtxt("toy-10d.test.csv", delimiter = ",")
+data = np.genfromtxt("bananas-1-2d.test.csv", delimiter = ",")
+np.random.shuffle(data)
 
 tic=time.time()
 
@@ -34,13 +36,13 @@ def d(x,b):
     n = np.size(x)
     s = 0
     for i in np.arange(1,n,1):
-        s = s + (x[i] - b[i])**2
+        s = s + (x[i] - b[i])*(x[i]-b[i])
     return s
 
 Node = collections.namedtuple("Node", 'point axis left right')
 k=np.size(data,axis=1)-1
-l=6
-K=np.arange(1,10,1)
+l=5
+K=np.arange(1,200,1)
 #x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
 
 class KDTree(object):    
@@ -134,8 +136,9 @@ for i in range(m):
 for i in range(l-m):
     D.append(data[a:a+b/l,:])
     a=a+b/l
-f=[float(0)]*np.size(K)
-g=[float(0)]*np.size(K)
+f=[float(format(0,".5f"))]*np.size(K)
+g=[float(format(0,".5f"))]*np.size(K)
+h=np.array([float(format(0,".5f"))]*np.size(K))
 de=0
 A=[]
 for i in range(l):        
@@ -157,6 +160,7 @@ for i in range(l):
 #        A = KDTree(2,Di)
 #        KDi=A[i].nearest_neighbor(k,e,x)
 #        KDi=A.nearest_neighbor(2,e,x)
+    g=[float(format(0,".5f"))]*np.size(K)
     for j in range(np.size(D[i], axis = 0)):
         s,Ab = f_Dg(A[i],K[-1],D[i][j,:])
         if (not s == D[i][j,0]):
@@ -177,7 +181,8 @@ for i in range(l):
                 f[e] = f[e] + 1
             f[e]=f[e]/np.size(D[i],axis=0)
             g[e]+=f[e]
-            f[e]=float(0)
+            f[e]=float(format(0,".5f"))
+    h=h+g
 #            s = f_Dg(A,e,[1,D[i][j,1],D[i][j,2]])
 ##    if(j==305):
 # #       A = KDTree(2,e,D[i][j,:],Di)
@@ -186,8 +191,9 @@ for i in range(l):
 #            if (not s == D[i][j,0]):
 #                f = f + 1
    #     #falsi.append(j)
-#        f=f/np.size(D[i],axis=0)
-    print(g)
-    g=[0.0]*np.size(K)
+#        f=f/np.size(D[i],axis=0)    
+h/=float(l)
+k1=np.argmin(h)
+print(h)
 toc=time.time()
 print(toc-tic)

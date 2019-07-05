@@ -42,7 +42,7 @@ def d(x,b):
 Node = collections.namedtuple("Node", 'point axis left right')
 k=np.size(data,axis=1)-1
 l=5
-K=np.arange(1,200,1)
+K=np.arange(1,201,1)
 #x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
 
 class KDTree(object):    
@@ -102,7 +102,7 @@ class KDTree(object):
             close, away = (left, right) if diff <= 0 else (right, left)
 
             recursive_search(close)
-            if diff ** 2 < best[e-1][1]:
+            if diff * diff < best[e-1][1]:
 
                 recursive_search(away)
 
@@ -136,9 +136,9 @@ for i in range(m):
 for i in range(l-m):
     D.append(data[a:a+b/l,:])
     a=a+b/l
-f=[float(format(0,".5f"))]*np.size(K)
-g=[float(format(0,".5f"))]*np.size(K)
-h=np.array([float(format(0,".5f"))]*np.size(K))
+f=[float(0)]*np.size(K)
+g=[float(0)]*np.size(K)
+h=np.array([float(0)]*np.size(K))
 de=0
 A=[]
 for i in range(l):        
@@ -160,19 +160,27 @@ for i in range(l):
 #        A = KDTree(2,Di)
 #        KDi=A[i].nearest_neighbor(k,e,x)
 #        KDi=A.nearest_neighbor(2,e,x)
-    g=[float(format(0,".5f"))]*np.size(K)
+    g=[float(0)]*np.size(K)
     for j in range(np.size(D[i], axis = 0)):
-        s,Ab = f_Dg(A[i],K[-1],D[i][j,:])
-        if (not s == D[i][j,0]):
-            f[-1]= f[-1] + 1
-        f[-1]=f[-1]/np.size(D[i],axis=0)
-        g[-1]+=f[-1]
-        f[-1]=float(0)
-        for e in np.arange(np.size(K)-2,-1,-1):
-            t=0
-            for ij in range(K[e]):
-                t+=Ab[ij][0][0]
-            f_Df=0
+        t=0
+        Ab = A[i].nearest_neighbor(k,K[-1],D[i][j,:])
+#        s,Ab = f_Dg(A[i],K[-1],D[i][j,:])
+#        if (not s == D[i][j,0]):
+#            f[-1]= f[-1] + 1
+#        f[-1]=f[-1]/np.size(D[i],axis=0)
+#        g[-1]+=f[-1]
+#        f[-1]=float(0)
+#        for ij in np.arange(0,K[0]+1,1):
+#            t+=Ab[ij][0][0]
+        
+        for e in np.arange(0,np.size(K),1):
+            f[e]=float(0)
+            if(e==0):
+                for ij in np.arange(0,K[0],1):
+                    t+=Ab[ij][0][0]
+            else:
+                for ij in np.arange(K[e-1],K[e],1):
+                    t+=Ab[ij][0][0]
             if t == 0:
                 f_Df = 1
             else:
@@ -181,7 +189,7 @@ for i in range(l):
                 f[e] = f[e] + 1
             f[e]=f[e]/np.size(D[i],axis=0)
             g[e]+=f[e]
-            f[e]=float(format(0,".5f"))
+            
     h=h+g
 #            s = f_Dg(A,e,[1,D[i][j,1],D[i][j,2]])
 ##    if(j==305):
@@ -192,8 +200,7 @@ for i in range(l):
 #                f = f + 1
    #     #falsi.append(j)
 #        f=f/np.size(D[i],axis=0)    
-h/=float(l)
+h/=l
 k1=np.argmin(h)
-print(h)
 toc=time.time()
 print(toc-tic)

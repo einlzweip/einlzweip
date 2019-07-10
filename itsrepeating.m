@@ -20,7 +20,10 @@ import math
 import numpy as np
 import time
 
-data = np.genfromtxt("bananas-1-2d.test.csv", delimiter = ",")
+name = "bananas-1-2d"
+data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
+writer = csv.writer(open("{}.result.csv".format(name), "w"))
+data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
 np.random.shuffle(data)
 
 tic=time.time()
@@ -201,6 +204,17 @@ for i in range(l):
    #     #falsi.append(j)
 #        f=f/np.size(D[i],axis=0)    
 h/=l
-k1=np.argmin(h)
+k1=np.argmin(h)+1
+F = 0.0
+B = KDTree(k,data)
+for i in range(np.size(data2, axis=0)):
+    x = data2[i,:]
+    y, Abs = f_Dg(B, k1, x)
+    writer.writerows([(y,x[1],x[2])])
+    if not y == x[0]:
+        F += 1
+F = F/np.size(data2, axis=0)
+print F
+
 toc=time.time()
 print(toc-tic)

@@ -15,37 +15,15 @@ Created on Mon Jul  1 11:03:45 2019
 """
 
 import collections
-import itertools
-import math
 import numpy as np
 import time
-
+import csv
+ 
 name = "bananas-1-2d"
-data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
-writer = csv.writer(open("{}.result.csv".format(name), "w"))
-data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
-np.random.shuffle(data)
-
-tic=time.time()
-
-def square_distance(a, b):
-    s = 0
-    for x, y in itertools.izip(a, b):
-        d = x - y
-        s += d * d
-    return s
-
-def d(x,b):
-    n = np.size(x)
-    s = 0
-    for i in np.arange(1,n,1):
-        s = s + (x[i] - b[i])*(x[i]-b[i])
-    return s
+l = 5
+KSET = np.arange(1,201,1)
 
 Node = collections.namedtuple("Node", 'point axis left right')
-k=np.size(data,axis=1)-1
-l=5
-K=np.arange(1,201,1)
 #x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
 
 class KDTree(object):    
@@ -113,47 +91,78 @@ class KDTree(object):
         return best
         #self.nearest_neighbor = nearest_neighbor(self, destination) 
 
+
+
+def d(x,b):
+    n = np.size(x)
+    s = 0
+    for i in np.arange(1,n,1):
+        s = s + (x[i] - b[i])*(x[i]-b[i])
+    return s
+
+def classify(name, KSET, l):
+    tic=time.time()
+    data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
+    writer = csv.writer(open("{}.result.csv".format(name), "w"))
+    data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
+    np.random.shuffle(data)
+
+    
+
+#def square_distance(a, b):
+ #   s = 0
+ #   for x, y in itertools.izip(a, b):
+ #       d = x - y
+ #       s += d * d
+ #   return s
+
+
+
+    k=np.size(data,axis=1)-1
+    def f_Dg(A,e,x):
+        Ab = A.nearest_neighbor(k,e,x)
+        s = 0
+        for i in range(e):
+            s = Ab[i][0][0] + s
+        f_Df=0
+        if s == 0:
+            f_Df = 1
+        else:
+            f_Df = np.sign(s)
+        return f_Df, Ab
+#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
+
+
         
 
 
-def f_Dg(A,e,x):
-    Ab = A.nearest_neighbor(k,e,x)
-    s = 0
-    for i in range(e):
-        s = Ab[i][0][0] + s
-    f_Df=0
-    if s == 0:
-        f_Df = 1
-    else:
-        f_Df = np.sign(s)
-    return f_Df, Ab
 
-b=np.size(data, axis = 0)
+
+    b=np.size(data, axis = 0)
 #K=np.arange(10,21,1)
-m=b % l
-a=0
-D=[]
-for i in range(m):
-    D.append(data[a:a+b/l+1,:])
-    a=a+b/l+1
-for i in range(l-m):
-    D.append(data[a:a+b/l,:])
-    a=a+b/l
-f=[float(0)]*np.size(K)
-g=[float(0)]*np.size(K)
-h=np.array([float(0)]*np.size(K))
-de=0
-A=[]
-for i in range(l):        
-    Di=np.zeros((b-np.size(D[i],axis=0),k+1))
+    m=b % l
     a=0
-    for j in range(l):
-        if (not j == i):
-            Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
-            a=a+np.size(D[j],axis=0)
-    A.append(KDTree(k,Di))
+    D=[]
+    for i in range(m):
+        D.append(data[a:a+b/l+1,:])
+        a=a+b/l+1
+    for i in range(l-m):
+        D.append(data[a:a+b/l,:])
+        a=a+b/l
+    f=[float(0)]*np.size(KSET)
+    g=[float(0)]*np.size(KSET)
+    h=np.array([float(0)]*np.size(KSET))
+    A=[]
+    for i in range(l):        
+        Di=np.zeros((b-np.size(D[i],axis=0),k+1))
+        a=0
+        for j in range(l):
+            if (not j == i):
+                Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
+                a=a+np.size(D[j],axis=0)
+        A.append(KDTree(k,Di))
 
-for i in range(l):
+    for i in range(l):
 #        Di=np.zeros((b-np.size(D[i],axis=0),3))
 #        a=0
 #        for j in range(l):
@@ -163,10 +172,10 @@ for i in range(l):
 #        A = KDTree(2,Di)
 #        KDi=A[i].nearest_neighbor(k,e,x)
 #        KDi=A.nearest_neighbor(2,e,x)
-    g=[float(0)]*np.size(K)
-    for j in range(np.size(D[i], axis = 0)):
-        t=0
-        Ab = A[i].nearest_neighbor(k,K[-1],D[i][j,:])
+        g=[float(0)]*np.size(KSET)
+        for j in range(np.size(D[i], axis = 0)):
+            t=0
+            Ab = A[i].nearest_neighbor(k,KSET[-1],D[i][j,:])
 #        s,Ab = f_Dg(A[i],K[-1],D[i][j,:])
 #        if (not s == D[i][j,0]):
 #            f[-1]= f[-1] + 1
@@ -176,24 +185,24 @@ for i in range(l):
 #        for ij in np.arange(0,K[0]+1,1):
 #            t+=Ab[ij][0][0]
         
-        for e in np.arange(0,np.size(K),1):
-            f[e]=float(0)
-            if(e==0):
-                for ij in np.arange(0,K[0],1):
-                    t+=Ab[ij][0][0]
-            else:
-                for ij in np.arange(K[e-1],K[e],1):
-                    t+=Ab[ij][0][0]
-            if t == 0:
-                f_Df = 1
-            else:
-                f_Df = np.sign(t)
-            if (not f_Df == D[i][j,0]):
-                f[e] = f[e] + 1
-            f[e]=f[e]/np.size(D[i],axis=0)
-            g[e]+=f[e]
+            for e in np.arange(0,np.size(KSET),1):
+                f[e]=float(0)
+                if(e==0):
+                    for ij in np.arange(0,KSET[0],1):
+                        t+=Ab[ij][0][0]
+                else:
+                    for ij in np.arange(KSET[e-1],KSET[e],1):
+                        t+=Ab[ij][0][0]
+                if t == 0:
+                    f_Df = 1
+                else:
+                    f_Df = np.sign(t)
+                if (not f_Df == D[i][j,0]):
+                    f[e] = f[e] + 1
+                f[e]=f[e]/np.size(D[i],axis=0)
+                g[e]+=f[e]
             
-    h=h+g
+        h=h+g
 #            s = f_Dg(A,e,[1,D[i][j,1],D[i][j,2]])
 ##    if(j==305):
 # #       A = KDTree(2,e,D[i][j,:],Di)
@@ -203,18 +212,17 @@ for i in range(l):
 #                f = f + 1
    #     #falsi.append(j)
 #        f=f/np.size(D[i],axis=0)    
-h/=l
-k1=np.argmin(h)+1
-F = 0.0
-B = KDTree(k,data)
-for i in range(np.size(data2, axis=0)):
-    x = data2[i,:]
-    y, Abs = f_Dg(B, k1, x)
-    writer.writerows([(y,x[1],x[2])])
-    if not y == x[0]:
-        F += 1
-F = F/np.size(data2, axis=0)
-print F
-
-toc=time.time()
-print(toc-tic)
+    h/=l
+    k1=np.argmin(h)+1
+    F = 0.0
+    B = KDTree(k,data)
+    for i in range(np.size(data2, axis=0)):
+        x = data2[i,:]
+        y, Abs = f_Dg(B, k1, x)
+        writer.writerows([(y,x[1],x[2])])
+        if not y == x[0]:
+            F += 1
+    F = F/np.size(data2, axis=0)
+    print F
+    toc=time.time()
+    print(toc-tic)

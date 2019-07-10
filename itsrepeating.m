@@ -19,9 +19,9 @@ import numpy as np
 import time
 import csv
  
-name = "bananas-1-2d"
+name = "toy-10d"
 l = 5
-KSET = np.arange(1,201,1)
+KSET = np.arange(1,2,1)
 
 Node = collections.namedtuple("Node", 'point axis left right')
 #x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
@@ -219,7 +219,10 @@ def classify(name, KSET, l):
     for i in range(np.size(data2, axis=0)):
         x = data2[i,:]
         y, Abs = f_Dg(B, k1, x)
-        writer.writerows([(y,x[1],x[2])])
+        vector = (y,)
+        for j in range(np.size(x)-1):
+            vector = vector + (x[j+1],)
+        writer.writerows([vector])
         if not y == x[0]:
             F += 1
     F = F/np.size(data2, axis=0)

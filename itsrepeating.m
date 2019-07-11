@@ -14,14 +14,17 @@ Created on Mon Jul  1 11:03:45 2019
 @author: Uschi
 """
 
+
 import collections
 import numpy as np
 import time
 import csv
+import operator
+import itertools
  
-name = "toy-10d"
+name = "bananas-1-2d"
 l = 5
-KSET = np.arange(1,2,1)
+KSET = np.arange(1,20,1)
 
 Node = collections.namedtuple("Node", 'point axis left right')
 #x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
@@ -121,9 +124,12 @@ def classify(name, KSET, l):
     k=np.size(data,axis=1)-1
     def f_Dg(A,e,x):
         Ab = A.nearest_neighbor(k,e,x)
-        s = 0
-        for i in range(e):
-            s = Ab[i][0][0] + s
+        #s = 0
+        idx0 = operator.itemgetter(0)
+        Abs = itertools.imap(idx0,Ab[0:e])
+        s = sum(itertools.imap(idx0,Abs))
+        #for i in range(e):
+        #    s = Ab[i][0][0] + s
         f_Df=0
         if s == 0:
             f_Df = 1
@@ -176,6 +182,10 @@ def classify(name, KSET, l):
         for j in range(np.size(D[i], axis = 0)):
             t=0
             Ab = A[i].nearest_neighbor(k,KSET[-1],D[i][j,:])
+            idx0 = operator.itemgetter(0)
+            Abs = itertools.imap(idx0,Ab[0:KSET[0]])
+            
+            
 #        s,Ab = f_Dg(A[i],K[-1],D[i][j,:])
 #        if (not s == D[i][j,0]):
 #            f[-1]= f[-1] + 1
@@ -187,12 +197,19 @@ def classify(name, KSET, l):
         
             for e in np.arange(0,np.size(KSET),1):
                 f[e]=float(0)
+                
                 if(e==0):
-                    for ij in np.arange(0,KSET[0],1):
-                        t+=Ab[ij][0][0]
+                    #t = np.sum(Ab[0:KSET[0]+1][0][0])
+                    t += sum(itertools.imap(idx0,Abs))
+                    #for ij in np.arange(0,KSET[0],1):
+                    #    t+=Ab[ij][0][0]
                 else:
-                    for ij in np.arange(KSET[e-1],KSET[e],1):
-                        t+=Ab[ij][0][0]
+                    Abs2 = itertools.imap(idx0,Ab[KSET[e-1]:KSET[e]])
+                    t += sum(itertools.imap(idx0,Abs2))
+                    #t = np.sum(Ab[KSET[e-1]:KSET[e]+1][0][0])
+                    #for ij in np.arange(KSET[e-1],KSET[e],1):
+                    #    t+=Ab[ij][0][0]
+                
                 if t == 0:
                     f_Df = 1
                 else:
@@ -229,3 +246,4 @@ def classify(name, KSET, l):
     print F
     toc=time.time()
     print(toc-tic)
+    return h

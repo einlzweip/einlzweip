@@ -4,13 +4,16 @@ import time
 import csv
 import itertools
 import operator
- 
+
+#Daten
 name = "bananas-1-2d"
+#Teildatenmsätze
 l = 5
+#K
 KSET = np.arange(1,201,1)
 
 Node = collections.namedtuple("Node", 'point axis left right')
-#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
+
 
 class KDTree1(object):    
     def __init__(self, k, objects):
@@ -19,36 +22,43 @@ class KDTree1(object):
 
             if not objects:
                 return None
-
+            #Mediandatenpunkt Achse 1 bestimmen
             objects.sort(key=lambda o: o[bxis])
             median_idx = len(objects) // 2
             median_point = objects[median_idx]
-
-            next_axis = bxis % k + 1 #(((bxis + 1) % k) + (bxis % 2) * 2)
+            #in alle Achsenrichtungen
+            next_axis = bxis % k + 1 
             return Node(median_point, bxis,
                         build_tree(objects[:median_idx], next_axis),
                         build_tree(objects[median_idx + 1:], next_axis))
 
         self.root = build_tree(list(objects))        
 
+    # k=Dimension, e nächste Nachbarn, destination=Zielpunkt x
     def nearest_neighbor1(self, k, e, destination):
 #        tic=time.time()
         
-            
+        #in best werden die e nächsten Nachbarn ausgegeben    
         best = [[0,2*k]]*e
         point, bxis, left, right = self.root
+        #Liste von Datenpunkten, die in Baum zunächst weiter weg sind von Zielpunkt
         aways= []
         while True:
             while True:
+                #aktueller betrachteter Datenpunkt
                 here_sd = d(point, destination)
+                #betrachter Datenpunkt liegt näher an Zielpunkt als letzter Punkt in best-Liste
                 if here_sd < best[e-1][1]:
+                    #betrachteten Punkt richtig einsortieren in aktuelle best-Liste
                     for f in range(e):
                         if(here_sd < best[f][1]):
                             best[f+1:e] = best[f:e-1]
                             best[f]=[point,here_sd]
                             break
+                #betrachteter Punkt links oder rechts (in Achsenrichtung gesehen) von Zielpunkt? 
                 diff = destination[bxis] - point[bxis]
                 close, away = (left, right) if diff <= 0 else (right, left)
+                # away Seite in aways Liste wenn betrachteter Punkt näher ist als letzter Punkt in best_Liste
                 if (diff*diff<best[-1][1]) and (not away is None):
                     aways.append([away,diff*diff])
                 if(close is None):
@@ -57,16 +67,16 @@ class KDTree1(object):
                 
             
             while (not(aways==[])):
+                #letzter Punkt in aways Liste weiter weg als letzter Punkt in best-Lsite=> Punkt  aus aways Liste entfernen
                 if(aways[-1][1]>best[-1][1]):
                     aways.pop(-1)
                 else:
                     break
+            # keine Punkte mehr in aways Liste
             if aways==[]:
                 break;
             point, bxis, left, right=aways[-1][0]
             aways.pop(-1)
-#        toc=time.time()
-#        print(toc-tic)
         return best
     
     def nearest_neighbor2(self, k, e, destination):
@@ -148,7 +158,7 @@ class KDTree1(object):
 #        #self.nearest_neighbor = nearest_neighbor(self, destination) 
 
 
-
+#Abstandsfunktion
 def d(x,b):
     return sum((x[1:]-b[1:])*(x[1:]-b[1:]))
 
@@ -157,6 +167,7 @@ def classify(name, KSET, l):
     data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
     writer = csv.writer(open("{}.result.csv".format(name), "w"))
     data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
+    #zufällige Durchmoischung des Datensatzes
     np.random.shuffle(data)
 
     
@@ -171,6 +182,7 @@ def classify(name, KSET, l):
 
 
     k=np.size(data,axis=1)-1
+    #f_D,e(x)
     def f_Dg(A,e,x):
         Ab = A.nearest_neighbor1(k,e,x)
         #s = 0
@@ -185,7 +197,6 @@ def classify(name, KSET, l):
         else:
             f_Df = np.sign(s)
         return f_Df, Ab
-#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
 
 
         
@@ -197,6 +208,7 @@ def classify(name, KSET, l):
 #K=np.arange(10,21,1)
     m=b % l
     a=0
+    # Liste mit den D_i
     D=[]
     for i in range(m):
         D.append(data[a:a+b/l+1,:])
@@ -207,7 +219,9 @@ def classify(name, KSET, l):
     f=[float(0)]*np.size(KSET)
     g=[float(0)]*np.size(KSET)
     h=np.array([float(0)]*np.size(KSET))
+    #Liste mit Bäumen der D\i
     A=[]
+    # D\i
     for i in range(l):        
         Di=np.zeros((b-np.size(D[i],axis=0),k+1))
         a=0
@@ -294,6 +308,7 @@ def classify(name, KSET, l):
         s = sum(itertools.imap(idx0,Abs))
         #for i in range(e):
         #    s = Ab[i][0][0] + s
+        #f_D
         f_Df=0
         if s == 0:
             f_Df = 1

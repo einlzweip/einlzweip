@@ -202,17 +202,17 @@ def classify1(name, KSET, l):
 #K=np.arange(10,21,1)
     m=b % l
     a=0
-    D=[]
+    D=[0]*l
     for i in range(m):
-        D.append(data[a:a+b/l+1,:])
+        D[i]=data[a:a+b/l+1,:]
         a=a+b/l+1
     for i in range(l-m):
-        D.append(data[a:a+b/l,:])
+        D[i+m]=data[a:a+b/l,:]
         a=a+b/l
     f=[float(0)]*np.size(KSET)
     g=[float(0)]*np.size(KSET)
     h=np.array([float(0)]*np.size(KSET))
-    A=[]
+    A=[0]*l
     for i in range(l):        
         Di=np.zeros((b-np.size(D[i],axis=0),k+1))
         a=0
@@ -220,7 +220,7 @@ def classify1(name, KSET, l):
             if (not j == i):
                 Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
                 a=a+np.size(D[j],axis=0)
-        A.append(KDTree1(k,Di))
+        A[i]=KDTree1(k,Di)
 
     for i in range(l):
 #        Di=np.zeros((b-np.size(D[i],axis=0),3))

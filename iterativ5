@@ -43,17 +43,18 @@ class KDTree1(object):
         aways= []
         while True:
             while True:
-                here_sd = d(point, destination)
-                if here_sd < best[e-1][1]:
-                    for f in range(e):
-                        if(here_sd < best[f][1]):
-                            best[f+1:e] = best[f:e-1]
-                            best[f]=[point,here_sd]
-                            break
                 diff = destination[bxis] - point[bxis]
                 close, away = (left, right) if diff <= 0 else (right, left)
-                if (diff*diff<best[-1][1]) and (not away is None):
-                    aways.append([away,diff*diff])
+                if(diff*diff<best[-1][1]):
+                    here_sd = d(point, destination)
+                    if here_sd < best[e-1][1]:
+                        for f in range(e):
+                            if(here_sd < best[f][1]):
+                                best[f+1:e] = best[f:e-1]
+                                best[f]=[point,here_sd]
+                                break
+                    if (not away is None):
+                        aways.append([away,diff*diff])
                 if(close is None):
                     break
                 point,bxis,left,right = close

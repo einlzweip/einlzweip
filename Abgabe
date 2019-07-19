@@ -137,16 +137,14 @@ def classify1(name, KSET, l):
         for j in range(np.size(D[i], axis = 0)):
             t=0
             Ab = np.array(A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i]))
-            Abs = Ab[0:KSET[0],0]
-        
+                
             for e in np.arange(0,np.size(KSET),1):
                 f[e]=float(0)
                 
                 if(e==0):
-                    t += Abs[0][0]
+                    t += Ab[0:KSET[0],0][0][0]
                 else:
-                    Abs2 = Ab[KSET[e-1]:KSET[e],0]
-                    t += Abs2[0][0]
+                    t += Ab[KSET[e-1]:KSET[e],0][0][0]
                 
                 if t == 0:
                     f_Df = 1
@@ -168,7 +166,7 @@ def classify1(name, KSET, l):
         for j in range(l):
             Ab = np.array(A[j].nearest_neighbor1(k,k1,x,D[j]))
             Abs = Ab[0:k1,0]
-            s = Abs[0][0]
+            s = np.sum(Abs, axis = 0)[0]
             if s == 0:
                 f_Df += 1
             else:

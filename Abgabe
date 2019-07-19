@@ -39,7 +39,7 @@ class KDTree1(object):
     def nearest_neighbor1(self, k, e, destination,objects):
         best = [[0,2*k]]*e
         point, bxis, left, right = self.root
-        aways= [[0,0]]*(np.size(objects,axis=0)/2)
+        aways= [[0,0]]*(int(np.size(objects,axis=0)/2))
         i=0
         while True:
             while True:
@@ -116,11 +116,11 @@ def classify1(name, KSET, l):
     a=0
     D=[0]*l
     for i in range(m):
-        D[i]=data[a:a+b/l+1,:]
-        a+=b/l+1
+        D[i]=data[a:int(a+b/l+1),:]
+        a+=int(b/l+1)
     for i in range(l-m):
-        D[i+m]=data[a:a+b/l,:]
-        a+=b/l
+        D[i+m]=data[a:int(a+b/l),:]
+        a+=int(b/l)
     f=[0.0]*np.size(KSET)
     g=[0.0]*np.size(KSET)
     h=np.array([0.0]*np.size(KSET))
@@ -138,18 +138,17 @@ def classify1(name, KSET, l):
         g=[0.0]*np.size(KSET)
         for j in range(np.size(D[i], axis = 0)):
             t=0
-            Ab = A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i])
-            idx0 = operator.itemgetter(0)
-            Abs = itertools.imap(idx0,Ab[0:KSET[0]])
+            Ab = np.array(A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i]))
+            Abs = Ab[0:KSET[0],0]
         
             for e in np.arange(0,np.size(KSET),1):
                 f[e]=float(0)
                 
                 if(e==0):
-                    t += sum(itertools.imap(idx0,Abs))
+                    t += Abs[0][0]
                 else:
-                    Abs2 = itertools.imap(idx0,Ab[KSET[e-1]:KSET[e]])
-                    t += sum(itertools.imap(idx0,Abs2))
+                    Abs2 = Ab[KSET[e-1]:KSET[e],0]
+                    t += Abs2[0][0]
                 
                 if t == 0:
                     f_Df = 1
@@ -169,11 +168,9 @@ def classify1(name, KSET, l):
         x = data2[i,:]
         f_Df=0
         for j in range(l):
-            Ab = A[j].nearest_neighbor1(k,k1,x,D[j])
-            idx0 = operator.itemgetter(0)
-            Abs = itertools.imap(idx0,Ab[0:k1])
-            s = sum(itertools.imap(idx0,Abs))
-            
+            Ab = np.array(A[j].nearest_neighbor1(k,k1,x,D[j]))
+            Abs = Ab[0:k1,0]
+            s = Abs[0][0]
             if s == 0:
                 f_Df += 1
             else:

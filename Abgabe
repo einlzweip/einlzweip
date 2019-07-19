@@ -13,7 +13,7 @@ l = 5
 KSET = np.arange(1,51,1)
 
 Node = collections.namedtuple("Node", 'point axis left right')
-#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
+
 
 class KDTree1(object):    
     def __init__(self, k, objects):
@@ -27,7 +27,7 @@ class KDTree1(object):
             median_idx = len(objects) // 2
             median_point = objects[median_idx]
 
-            next_axis = bxis % k + 1 #(((bxis + 1) % k) + (bxis % 2) * 2)
+            next_axis = bxis % k + 1 
             return Node(median_point, bxis,
                         build_tree(objects[:median_idx], next_axis),
                         build_tree(objects[median_idx + 1:], next_axis))
@@ -37,9 +37,7 @@ class KDTree1(object):
         self.root = build_tree(list(objects))        
 
     def nearest_neighbor1(self, k, e, destination,objects):
-#        tic=time.time()
-        
-            
+                   
         best = [[0,2*k]]*e
         point, bxis, left, right = self.root
         aways= [[0,0]]*(np.size(objects,axis=0)/2)
@@ -59,10 +57,7 @@ class KDTree1(object):
                     if (not away is None):
                         aways[i]=([away,diff*diff])
                         i=i+1
-#                    f=((here_sd<np.array(best)[:,1]).tolist()).index(True)
-#                    best[f+1:e] = best[f:e-1]
-#                    best[f]=[point,here_sd]
-                
+                        
                 if(close is None):
                     break
                 point,bxis,left,right = close
@@ -70,55 +65,23 @@ class KDTree1(object):
             
             while (not i<=0):
                 if(aways[i-1][1]>best[-1][1]):
-                    #aways.pop(-1)
+
                     i=i-1
                 else:
                     break
             if i<=0:
                 break;
             point, bxis, left, right=aways[i-1][0]
-            #aways.pop(-1)
+  
             i=i-1
-#        toc=time.time()
-#        print(toc-tic)
+
         return best
     
     def nearest_neighbor2(self, k, e, destination):
-#        tic=time.time()
-#        
-#            
-        best = [[0,2*k]]*e
-#        point, bxis, left, right = self.root
-#        aways= []
-#        while True:
-#            while True:
-#                here_sd = d(point, destination)
-#                if here_sd < best[e-1][1]:
-#                    for f in range(e):
-#                        if(here_sd < best[f][1]):
-#                            best[f+1:e] = best[f:e-1]
-#                            best[f]=[point,here_sd]
-#                            break
-#                diff = destination[bxis] - point[bxis]
-#                close, away = (left, right) if diff <= 0 else (right, left)
-#                if (diff*diff<best[-1][1]) and (not away is None):
-#                    aways.append([away,diff*diff])
-#                if(close is None):
-#                    break
-#                point,bxis,left,right = close
-#                
-#            
-#            while (not(aways==[])):
-#                if(aways[-1][1]>best[-1][1]):
-#                    aways.pop(-1)
-#                else:
-#                    break
-#            if aways==[]:
-#                break;
-#            point, bxis, left, right=aways[-1][0]
-#            aways.pop(-1)
-#        toc=time.time()
 
+        
+           
+        best = [[0,2*k]]*e
 
         def recursive_search(here):
 
@@ -144,58 +107,17 @@ class KDTree1(object):
                 recursive_search(away)
 
         recursive_search(self.root)
-#        toc=time.time()
-#        print(toc-tic)
+
         return best
-#        #self.nearest_neighbor = nearest_neighbor(self, destination) 
 
-
-
-#def d(x,b):
-#    return sum((x[1:]-b[1:])*(x[1:]-b[1:]))
 
 def classify1(name, KSET, l):
     tic=time.time()
     data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
     data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
-    np.random.shuffle(data)
-
-    
-
-#def square_distance(a, b):
- #   s = 0
- #   for x, y in itertools.izip(a, b):
- #       d = x - y
- #       s += d * d
- #   return s
-
-
-
+    np.random.shuffle(data)    
     k=np.size(data,axis=1)-1
-#    def f_Dg(A,e,x):
-#        Ab = A.nearest_neighbor2(k,e,x)
-#        #s = 0
-#        idx0 = operator.itemgetter(0)
-#        Abs = itertools.imap(idx0,Ab[0:e])
-#        s = sum(itertools.imap(idx0,Abs))
-#        #for i in range(e):
-#        #    s = Ab[i][0][0] + s
-#        f_Df=0
-#        if s == 0:
-#            f_Df = 1
-#        else:
-#            f_Df = np.sign(s)
-#        return f_Df, Ab
-#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
-
-
-        
-
-
-
-
     b=np.size(data, axis = 0)
-#K=np.arange(10,21,1)
     m=b % l
     a=0
     D=[0]*l
@@ -219,46 +141,21 @@ def classify1(name, KSET, l):
         A[i]=KDTree1(k,Di)
 
     for i in range(l):
-#        Di=np.zeros((b-np.size(D[i],axis=0),3))
-#        a=0
-#        for j in range(l):
-#            if (not j == i):
-#                Di[a:a+np.size(D[j],axis=0),0:3]=D[j]
-#                a=a+np.size(D[j],axis=0)
-#        A = KDTree(2,Di)
-#        KDi=A[i].nearest_neighbor(k,e,x)
-#        KDi=A.nearest_neighbor(2,e,x)
         g=[float(0)]*np.size(KSET)
         for j in range(np.size(D[i], axis = 0)):
             t=0
             Ab = A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i])
             idx0 = operator.itemgetter(0)
             Abs = itertools.imap(idx0,Ab[0:KSET[0]])
-            
-            
-#        s,Ab = f_Dg(A[i],K[-1],D[i][j,:])
-#        if (not s == D[i][j,0]):
-#            f[-1]= f[-1] + 1
-#        f[-1]=f[-1]/np.size(D[i],axis=0)
-#        g[-1]+=f[-1]
-#        f[-1]=float(0)
-#        for ij in np.arange(0,K[0]+1,1):
-#            t+=Ab[ij][0][0]
         
             for e in np.arange(0,np.size(KSET),1):
                 f[e]=float(0)
                 
                 if(e==0):
-                    #t = np.sum(Ab[0:KSET[0]+1][0][0])
                     t += sum(itertools.imap(idx0,Abs))
-                    #for ij in np.arange(0,KSET[0],1):
-                    #    t+=Ab[ij][0][0]
                 else:
                     Abs2 = itertools.imap(idx0,Ab[KSET[e-1]:KSET[e]])
                     t += sum(itertools.imap(idx0,Abs2))
-                    #t = np.sum(Ab[KSET[e-1]:KSET[e]+1][0][0])
-                    #for ij in np.arange(KSET[e-1],KSET[e],1):
-                    #    t+=Ab[ij][0][0]
                 
                 if t == 0:
                     f_Df = 1
@@ -269,16 +166,7 @@ def classify1(name, KSET, l):
                 f[e]=f[e]/np.size(D[i],axis=0)
                 g[e]+=f[e]
             
-        h=h+g
-#            s = f_Dg(A,e,[1,D[i][j,1],D[i][j,2]])
-##    if(j==305):
-# #       A = KDTree(2,e,D[i][j,:],Di)
-#  #      Ab = A.nearest_neighbor
-#   #     print(Ab)
-#            if (not s == D[i][j,0]):
-#                f = f + 1
-   #     #falsi.append(j)
-#        f=f/np.size(D[i],axis=0)    
+        h=h+g 
     h/=l
     k1=KSET[np.argmin(h)]
     F = 0.0
@@ -288,12 +176,9 @@ def classify1(name, KSET, l):
         f_Df=0
         for j in range(l):
             Ab = A[j].nearest_neighbor1(k,k1,x,D[j])
-            #s = 0
             idx0 = operator.itemgetter(0)
             Abs = itertools.imap(idx0,Ab[0:k1])
             s = sum(itertools.imap(idx0,Abs))
-            #for i in range(e):
-                #    s = Ab[i][0][0] + s
             
             if s == 0:
                 f_Df += 1
@@ -302,11 +187,6 @@ def classify1(name, KSET, l):
         
         f_Df=np.sign(f_Df+0.5)
         vector = [f_Df] + x[1:].tolist()
-        
-        #y, Abs = f_Dg(B, k1, x)
-        #vector = (y,)
-        #for j in range(np.size(x)-1):
-        #    vector = vector + (x[j+1],)
         writer.writerows([vector])
         if not f_Df == x[0]:
             F += 1

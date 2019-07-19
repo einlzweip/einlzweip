@@ -1,206 +1,316 @@
-function plot_cube(A)
-clf
-%Rotationsmatrizen
-%Start von Position 9
-E3=[0,1,0;-1,0,0;0,0,1];
-E20=[1,0,0;0,-1,0;0,0,-1];
-E7=[0,0,-1;0,1,0;1,0,0];
-%Start von Position 6
-K12=[1,0,0;0,0,-1;0,1,0];
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 
-R={E3^2,E3,E3,E3^2,eye(3),eye(3),E3^3,E3^3,eye(3),K12*E3^2,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,E3*E20,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,E3^3*E20};
-R1={E3^2,E3,E3^2*E7,E3^2,eye(3),eye(3),E7,E7*K12^3,eye(3),E3*K12,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,K12^2*E7,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,E7^3};
-R2={E3^2,E3,K12,E3^2,eye(3),eye(3),E3^2*K12,E3^3,eye(3),E3*K12,K12,K12*E3*E7*K12^3,E3*K12,E3^3*K12,E3^2*K12,K12^3,K12^3,K12*E3^2,E3*E20,E20,E3^2*E20,E20,E20,E3^2*E20,E20*E3,K12^3};
-T = [1 1 2; 1 1 2; 2 1 2; 1 2 2; 1 1 2; 2 1 2; 1 2 2; 2 2 2; 2 2 2; 1 1 1; 1 1 1; 2 1 2; 1 2 1; 2 1 1; 1 2 1; 1 2 2; 2 2 2; 1 1 1; 2 1 1; 2 1 1; 1 1 1; 1 2 1; 2 2 1; 1 2 1; 1 2 1; 2 2 1]-1.5;   
+import collections
+import numpy as np
+import time
+import csv
+import itertools
+import operator
+ 
+name = "bananas-1-2d"
+l = 5
+KSET = np.arange(1,51,1)
 
-%figure()
-hold on
-vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-fac = [1 2 6 5;2 3 7 6;3 4 8 7;4 1 5 8;1 2 3 4;5 6 7 8];
-C = [1 0.5 0; 0 0 1; 1 0 0; 0 1 0; 1 1 1; 1 1 0];
+Node = collections.namedtuple("Node", 'point axis left right')
+#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
 
-%    1 orange; 2 blau; 3 rot; 4 gruen; 5 weiss; 6 gelb
-Color_stones = [6 3 4; 6 4 0; 6 4 1; 6 3 0; 6 0 0; 6 1 0; 6 2 3; 6 2 0; 6 1 2; 3 4 0; 4 0 0; 1 4 0; 3 0 0; 1 0 0; 2 3 0; 2 0 0;
-2 1 0; 5 4 3; 5 4 0; 5 1 4; 5 3 0; 5 0 0; 5 1 0; 5 3 2; 5 2 0; 5 2 1];
+class KDTree1(object):    
+    def __init__(self, k, objects):
 
-set(gca,'visible','off'); 
-    
-for i = 1:26
-     %Ecken
-     if(any(i == [1 3 7 9 18 20 24 26]))
-         
-         if (A(i,2) == 0)
-             D = [0 0 0; C(Color_stones(i,2),:); C(Color_stones(i,3),:); 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-             vert = transpose( R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-             view(3)
-             axis vis3d
-             hold on
-             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-         end
-             
-         if (A(i,2) == 1)
-             D = [0 0 0; C(Color_stones(i,3),:); C(Color_stones(i,1),:); 0 0 0; 0 0 0; C(Color_stones(i,2),:)];
-             vert = transpose( R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-             view(3)
-             axis vis3d
-             hold on
-             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-         end
-             
-         if (A(i,2) == 2)
-             D = [0 0 0; C(Color_stones(i,1),:); C(Color_stones(i,2),:); 0 0 0; 0 0 0; C(Color_stones(i,3),:)];
-             vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-             patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-             view(3)
-             axis vis3d
-             hold on
-             vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-         end
-     end
-        %Kanten
+        def build_tree(objects, bxis=1):
+            tic=time.time()
+            if not objects:
+                return None
+
+            objects.sort(key=lambda o: o[bxis])
+            median_idx = len(objects) // 2
+            median_point = objects[median_idx]
+
+            next_axis = bxis % k + 1 #(((bxis + 1) % k) + (bxis % 2) * 2)
+            return Node(median_point, bxis,
+                        build_tree(objects[:median_idx], next_axis),
+                        build_tree(objects[median_idx + 1:], next_axis))
+            toc=time.time()
+            print(toc-tic)
+
+        self.root = build_tree(list(objects))        
+
+    def nearest_neighbor1(self, k, e, destination,objects):
+#        tic=time.time()
         
-    if(any(i == [2 4 6 8 10 12 15 17 19 21 23 25]))
             
-        if (A(i,2) == 0)
-            if(any(i == [15 17]) && A(i,1) == 12)
-                vert = transpose(K12*transpose(vert)+transpose(T(A(i,1),:)-[0 0 1]));
-            elseif(any(i == [10 12]) && A(i,1) == 17)
-                vert = transpose(E7^3*E3^3*transpose(vert)+transpose(T(A(i,1),:)-[0 0 1]));
-            elseif(any(i == [10 12]) && A(i,1) == 15)
-                vert = transpose(E7 * E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif(any(i == [15 17]) && A(i,1) == 10)
-                vert = transpose(K12 * E3^2 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            else
-                vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-            end
-            D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+        best = [[0,2*k]]*e
+        point, bxis, left, right = self.root
+        aways= [[0,0]]*(np.size(objects,axis=0)/2)
+        i=0
+        while True:
+            while True:
+                diff = destination[bxis] - point[bxis]
+                close, away = (left, right) if diff <= 0 else (right, left)
+                if(diff*diff<best[-1][1]):
+                    here_sd = sum((point[1:]-destination[1:])*(point[1:]-destination[1:]))
+                    if here_sd < best[e-1][1]:
+                        for f in range(e):
+                            if(here_sd < best[f][1]):
+                                best[f+1:e] = best[f:e-1]
+                                best[f]=[point,here_sd]
+                                break
+                    if (not away is None):
+                        aways[i]=([away,diff*diff])
+                        i=i+1
+#                    f=((here_sd<np.array(best)[:,1]).tolist()).index(True)
+#                    best[f+1:e] = best[f:e-1]
+#                    best[f]=[point,here_sd]
+                
+                if(close is None):
+                    break
+                point,bxis,left,right = close
+                
             
-            patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-            view(3)
-            axis vis3d
-            hold on
-            vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-        end
-            
-        if (A(i,2) == 1)
-            if(any(i == [4 6 21 23]) && A(i,1) == 12)
-                vert = transpose(K12 * transpose(vert) + transpose(T(A(i,1),:) - [0 0 1]));
-            elseif (any(i == [10 12 15]) && A(i,1) == 6)
-                vert = transpose(K12^3 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (any(i == 12) && A(i,1)==23)
-                vert = transpose(K12 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (any(i == [10,15,17]) && A(i,1) == 8)
-                vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif (any(i == [4 6]) && A(i,1) == 8)
-                vert = transpose(E3^3 * transpose(vert) + transpose(T(A(i,1),:) )); 
-            elseif (any(i == [2 8 19 25]) && A(i,1) == 15)
-                vert= transpose(E7 * E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif (any(i == [2 8 19 25]) && A(i,1) == 17)
-                vert= transpose(E7^3*E3^3*transpose(vert)+transpose(T(A(i,1),:)+[0 0 -1]));
-            elseif (any(i == [15 17]) && A(i,1) == 25)
-                vert = transpose(E7^3*K12^3*transpose(vert)+transpose(T(A(i,1),:)+[1 0 0]));
-            elseif (any(i == [4 6 21 23]) && A(i,1) == 10)
-                vert = transpose(E7^2 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif (any(i == [10 12]) && A(i,1) == 21)
-                vert = transpose(K12 * E7 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (any(i == [10]) && A(i,1) == 4)
-                vert = transpose(E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (any(i == [10]) && A(i,1) == 23)
-                vert = transpose(K12 * E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (any(i == [15 17]) && A(i,1) == 19)
-                vert = transpose(E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            else
-                vert = transpose(R1{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));    
-            end
-            D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
+            while (not i<=0):
+                if(aways[i-1][1]>best[-1][1]):
+                    #aways.pop(-1)
+                    i=i-1
+                else:
+                    break
+            if i<=0:
+                break;
+            point, bxis, left, right=aways[i-1][0]
+            #aways.pop(-1)
+            i=i-1
+#        toc=time.time()
+#        print(toc-tic)
+        return best
     
-            patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-            view(3)
-            axis vis3d
-            hold on
-            vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-        end
+    def nearest_neighbor2(self, k, e, destination):
+#        tic=time.time()
+#        
+#            
+        best = [[0,2*k]]*e
+#        point, bxis, left, right = self.root
+#        aways= []
+#        while True:
+#            while True:
+#                here_sd = d(point, destination)
+#                if here_sd < best[e-1][1]:
+#                    for f in range(e):
+#                        if(here_sd < best[f][1]):
+#                            best[f+1:e] = best[f:e-1]
+#                            best[f]=[point,here_sd]
+#                            break
+#                diff = destination[bxis] - point[bxis]
+#                close, away = (left, right) if diff <= 0 else (right, left)
+#                if (diff*diff<best[-1][1]) and (not away is None):
+#                    aways.append([away,diff*diff])
+#                if(close is None):
+#                    break
+#                point,bxis,left,right = close
+#                
+#            
+#            while (not(aways==[])):
+#                if(aways[-1][1]>best[-1][1]):
+#                    aways.pop(-1)
+#                else:
+#                    break
+#            if aways==[]:
+#                break;
+#            point, bxis, left, right=aways[-1][0]
+#            aways.pop(-1)
+#        toc=time.time()
+
+
+        def recursive_search(here):
+
+            if here is None:
+                return
+
+            point, bxis, left, right = here
+            here_sd = sum((point[1:]-destination[1:])*(point[1:]-destination[1:]))
+            if here_sd < best[e-1][1]:
+                for f in range(e):
+                    if(here_sd < best[f][1]):
+                        best[f+1:e] = best[f:e-1]
+                        best[f]=[point,here_sd]
+                        break
+
+
+            diff = destination[bxis] - point[bxis]
+            close, away = (left, right) if diff <= 0 else (right, left)
+
+            recursive_search(close)
+            if diff * diff < best[e-1][1]:
+
+                recursive_search(away)
+
+        recursive_search(self.root)
+#        toc=time.time()
+#        print(toc-tic)
+        return best
+#        #self.nearest_neighbor = nearest_neighbor(self, destination) 
+
+
+
+#def d(x,b):
+#    return sum((x[1:]-b[1:])*(x[1:]-b[1:]))
+
+def classify1(name, KSET, l):
+    tic=time.time()
+    data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
+    data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
+    np.random.shuffle(data)
+
+    
+
+#def square_distance(a, b):
+ #   s = 0
+ #   for x, y in itertools.izip(a, b):
+ #       d = x - y
+ #       s += d * d
+ #   return s
+
+
+
+    k=np.size(data,axis=1)-1
+#    def f_Dg(A,e,x):
+#        Ab = A.nearest_neighbor2(k,e,x)
+#        #s = 0
+#        idx0 = operator.itemgetter(0)
+#        Abs = itertools.imap(idx0,Ab[0:e])
+#        s = sum(itertools.imap(idx0,Abs))
+#        #for i in range(e):
+#        #    s = Ab[i][0][0] + s
+#        f_Df=0
+#        if s == 0:
+#            f_Df = 1
+#        else:
+#            f_Df = np.sign(s)
+#        return f_Df, Ab
+#x=[1,0.5,0.5,0.5,0.5,0.5,0.5,0.6,0.5,0.5,0.5]
+
+
+        
+
+
+
+
+    b=np.size(data, axis = 0)
+#K=np.arange(10,21,1)
+    m=b % l
+    a=0
+    D=[0]*l
+    for i in range(m):
+        D[i]=data[a:a+b/l+1,:]
+        a=a+b/l+1
+    for i in range(l-m):
+        D[i+m]=data[a:a+b/l,:]
+        a=a+b/l
+    f=[float(0)]*np.size(KSET)
+    g=[float(0)]*np.size(KSET)
+    h=np.array([float(0)]*np.size(KSET))
+    A=[0]*l
+    for i in range(l):        
+        Di=np.zeros((b-np.size(D[i],axis=0),k+1))
+        a=0
+        for j in range(l):
+            if (not j == i):
+                Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
+                a=a+np.size(D[j],axis=0)
+        A[i]=KDTree1(k,Di)
+
+    for i in range(l):
+#        Di=np.zeros((b-np.size(D[i],axis=0),3))
+#        a=0
+#        for j in range(l):
+#            if (not j == i):
+#                Di[a:a+np.size(D[j],axis=0),0:3]=D[j]
+#                a=a+np.size(D[j],axis=0)
+#        A = KDTree(2,Di)
+#        KDi=A[i].nearest_neighbor(k,e,x)
+#        KDi=A.nearest_neighbor(2,e,x)
+        g=[float(0)]*np.size(KSET)
+        for j in range(np.size(D[i], axis = 0)):
+            t=0
+            Ab = A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i])
+            idx0 = operator.itemgetter(0)
+            Abs = itertools.imap(idx0,Ab[0:KSET[0]])
             
-        if (A(i,2) == 2)
-            D = [0 0 0; C(Color_stones(i,2),:); 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-            if (any(i == [6 12]) && A(i,1) == 8)
-                vert = transpose(E7 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif  (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 2)
-                vert = transpose(E7 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [1 0 0]));
-            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 4)
-                vert = transpose(E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 6)
-                vert = transpose(E3^3 * E7 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (any(i == [2 4 6 8 10 19 21 23 25]) && A(i,1) == 8)
-                vert = transpose(E7 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif (any(i == [2 8 10 12 19 25]) && A(i,1) == 10)
-                vert = transpose(E7^2 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif (any(i == [2 8 10 12 19 25]) && A(i,1) == 12)
-                vert = transpose(K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 -1]));
-            elseif (any(i == [4 6 15 17 21 23]) && A(i,1) == 15)
-                vert = transpose(K12^3 * E7 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 1]));
-            elseif (any(i == [4 6 15 17 21 23]) && A(i,1) == 17)
-                vert = transpose(E7^3 *E3^3 * transpose(vert) + transpose(T(A(i,1),:) + [0 0 -1]));
-            elseif (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 19)
-                vert = transpose(E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [-1 0 0]));
-            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 21)
-                vert = transpose(E3 * E7^3 * K12 * transpose(vert) + transpose(T(A(i,1),:) + [0 1 0]));
-            elseif (any(i == [2 4 6 8 15 17 19 21 23 25]) && A(i,1) == 23)
-                vert = transpose(K12 *E7^3 * E3 * transpose(vert) + transpose(T(A(i,1),:) + [0 -1 0]));
-            elseif (any(i == [2 4 6 8 10 12 19 21 23 25]) && A(i,1) == 25)
-                vert = transpose(E7^3 * K12^3 * transpose(vert) + transpose(T(A(i,1),:) + [1 0 0])); 
-            else
-                vert = transpose(R2{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-            end
-            patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-            view(3)
-            axis vis3d
-            hold on
-            vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-        end
-    end
-       
-        %Mittelsteine
-    if(any(i == [5 11 13 14 16 22]'))
-        D = [0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; C(Color_stones(i,1),:)];
-        vert = transpose(R{A(i,1)} * transpose(vert) + transpose(T(A(i,1),:)));
-        patch('Vertices',vert,'Faces',fac,'FaceVertexCData',D,'FaceColor','flat')
-        view(3)
-        axis vis3d
-        hold on
-        vert = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
-    end
-     
-end
-
-sl = uicontrol(gcf,'Style','Pushbutton',...
-	       'Position',[20,50,50,20],...
-	       'Tag','myslider','string', 'Ln');
-set(sl,'Callback',@pushbutton1_Callback)
-
-function pushbutton1_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
-p=puzzle(A);
-clf;
-plot_Ln(A);
-end
-
-sl = uicontrol(gcf,'Style','Pushbutton',...
- 	       'Position',[80,80,50,20],...
- 	       'Tag','pushbutton2','string', 'Rp');
-set(sl,'Callback',@pushbutton2_Callback)
-
-function pushbutton2_Callback(hObject, eventdata, handles)
-import /home/2016/streibls/puzzle.* 
-p=puzzle(A);
-A = p.stones;
-clf;
-plot_Rp(A);
-end
-
-end
-
-
-
+            
+#        s,Ab = f_Dg(A[i],K[-1],D[i][j,:])
+#        if (not s == D[i][j,0]):
+#            f[-1]= f[-1] + 1
+#        f[-1]=f[-1]/np.size(D[i],axis=0)
+#        g[-1]+=f[-1]
+#        f[-1]=float(0)
+#        for ij in np.arange(0,K[0]+1,1):
+#            t+=Ab[ij][0][0]
+        
+            for e in np.arange(0,np.size(KSET),1):
+                f[e]=float(0)
+                
+                if(e==0):
+                    #t = np.sum(Ab[0:KSET[0]+1][0][0])
+                    t += sum(itertools.imap(idx0,Abs))
+                    #for ij in np.arange(0,KSET[0],1):
+                    #    t+=Ab[ij][0][0]
+                else:
+                    Abs2 = itertools.imap(idx0,Ab[KSET[e-1]:KSET[e]])
+                    t += sum(itertools.imap(idx0,Abs2))
+                    #t = np.sum(Ab[KSET[e-1]:KSET[e]+1][0][0])
+                    #for ij in np.arange(KSET[e-1],KSET[e],1):
+                    #    t+=Ab[ij][0][0]
+                
+                if t == 0:
+                    f_Df = 1
+                else:
+                    f_Df = np.sign(t)
+                if (not f_Df == D[i][j,0]):
+                    f[e] = f[e] + 1
+                f[e]=f[e]/np.size(D[i],axis=0)
+                g[e]+=f[e]
+            
+        h=h+g
+#            s = f_Dg(A,e,[1,D[i][j,1],D[i][j,2]])
+##    if(j==305):
+# #       A = KDTree(2,e,D[i][j,:],Di)
+#  #      Ab = A.nearest_neighbor
+#   #     print(Ab)
+#            if (not s == D[i][j,0]):
+#                f = f + 1
+   #     #falsi.append(j)
+#        f=f/np.size(D[i],axis=0)    
+    h/=l
+    k1=KSET[np.argmin(h)]
+    F = 0.0
+    writer = csv.writer(open("{}.result.csv".format(name), "w"))
+    for i in range(np.size(data2, axis=0)):
+        x = data2[i,:]
+        f_Df=0
+        for j in range(l):
+            Ab = A[j].nearest_neighbor1(k,k1,x,D[j])
+            #s = 0
+            idx0 = operator.itemgetter(0)
+            Abs = itertools.imap(idx0,Ab[0:k1])
+            s = sum(itertools.imap(idx0,Abs))
+            #for i in range(e):
+                #    s = Ab[i][0][0] + s
+            
+            if s == 0:
+                f_Df += 1
+            else:
+                f_Df += np.sign(s)
+        
+        f_Df=np.sign(f_Df+0.5)
+        vector = [f_Df] + x[1:].tolist()
+        
+        #y, Abs = f_Dg(B, k1, x)
+        #vector = (y,)
+        #for j in range(np.size(x)-1):
+        #    vector = vector + (x[j+1],)
+        writer.writerows([vector])
+        if not f_Df == x[0]:
+            F += 1
+    print(h)
+    toc=time.time()
+    print(toc-tic)
+    return (F/np.size(data2, axis=0))

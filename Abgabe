@@ -10,7 +10,7 @@ import operator
  
 name = "bananas-1-2d"
 l = 5
-KSET = np.arange(1,51,1)
+KSET = np.arange(1,201,1)
 
 Node = collections.namedtuple("Node", 'point axis left right')
 
@@ -37,7 +37,6 @@ class KDTree1(object):
         self.root = build_tree(list(objects))        
 
     def nearest_neighbor1(self, k, e, destination,objects):
-                   
         best = [[0,2*k]]*e
         point, bxis, left, right = self.root
         aways= [[0,0]]*(np.size(objects,axis=0)/2)
@@ -46,7 +45,8 @@ class KDTree1(object):
             while True:
                 diff = destination[bxis] - point[bxis]
                 close, away = (left, right) if diff <= 0 else (right, left)
-                if(diff*diff<best[-1][1]):
+                diff2=diff*diff
+                if(diff2<best[-1][1]):
                     here_sd = sum((point[1:]-destination[1:])*(point[1:]-destination[1:]))
                     if here_sd < best[e-1][1]:
                         for f in range(e):
@@ -55,26 +55,20 @@ class KDTree1(object):
                                 best[f]=[point,here_sd]
                                 break
                     if (not away is None):
-                        aways[i]=([away,diff*diff])
+                        aways[i]=([away,diff2])
                         i=i+1
-                        
                 if(close is None):
                     break
                 point,bxis,left,right = close
-                
-            
             while (not i<=0):
                 if(aways[i-1][1]>best[-1][1]):
-
                     i=i-1
                 else:
                     break
             if i<=0:
                 break;
             point, bxis, left, right=aways[i-1][0]
-  
             i=i-1
-
         return best
     
     def nearest_neighbor2(self, k, e, destination):
@@ -123,13 +117,13 @@ def classify1(name, KSET, l):
     D=[0]*l
     for i in range(m):
         D[i]=data[a:a+b/l+1,:]
-        a=a+b/l+1
+        a+=b/l+1
     for i in range(l-m):
         D[i+m]=data[a:a+b/l,:]
-        a=a+b/l
-    f=[float(0)]*np.size(KSET)
-    g=[float(0)]*np.size(KSET)
-    h=np.array([float(0)]*np.size(KSET))
+        a+=b/l
+    f=[0.0]*np.size(KSET)
+    g=[0.0]*np.size(KSET)
+    h=np.array([0.0]*np.size(KSET))
     A=[0]*l
     for i in range(l):        
         Di=np.zeros((b-np.size(D[i],axis=0),k+1))
@@ -137,11 +131,11 @@ def classify1(name, KSET, l):
         for j in range(l):
             if (not j == i):
                 Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
-                a=a+np.size(D[j],axis=0)
+                a+=np.size(D[j],axis=0)
         A[i]=KDTree1(k,Di)
 
     for i in range(l):
-        g=[float(0)]*np.size(KSET)
+        g=[0.0]*np.size(KSET)
         for j in range(np.size(D[i], axis = 0)):
             t=0
             Ab = A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i])
@@ -162,13 +156,13 @@ def classify1(name, KSET, l):
                 else:
                     f_Df = np.sign(t)
                 if (not f_Df == D[i][j,0]):
-                    f[e] = f[e] + 1
-                f[e]=f[e]/np.size(D[i],axis=0)
+                    f[e] += 1
+                f[e]/=np.size(D[i],axis=0)
                 g[e]+=f[e]
-            
-        h=h+g 
+        h+=g 
     h/=l
     k1=KSET[np.argmin(h)]
+    k1=50
     F = 0.0
     writer = csv.writer(open("{}.result.csv".format(name), "w"))
     for i in range(np.size(data2, axis=0)):

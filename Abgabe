@@ -22,7 +22,7 @@ class KDTree1(object):
                 return None
 
             objects.sort(key=lambda o: o[bxis])
-            median_idx = len(objects) / 2
+            median_idx = len(objects) // 2
             median_point = objects[median_idx]
 
             next_axis = bxis % k + 1 

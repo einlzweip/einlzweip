@@ -1,0 +1,162 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import collections
+import numpy as np
+import time
+import csv
+
+name = "bananas-1-2d"
+l = 5
+KSET = np.arange(1,201,1)
+
+Node = collections.namedtuple("Node", 'point axis left right')
+
+class KDTree1(object):    
+    def __init__(self, k, objects):
+        def build_tree(objects, bxis=1):
+            tic=time.time()
+            if not objects:
+                return None
+            objects.sort(key=lambda o: o[bxis])
+            median_idx = int(len(objects)/2)
+            median_point = objects[median_idx]
+            next_axis = bxis % k + 1 
+            return Node(median_point, bxis,
+                        build_tree(objects[:median_idx], next_axis),
+                        build_tree(objects[median_idx + 1:], next_axis))
+            toc=time.time()
+            print(toc-tic)
+        self.root = build_tree(list(objects))        
+
+    def nearest_neighbor1(self, k, e, destination,objects):
+        best = [[0,2*k]]*e
+        point, bxis, left, right = self.root
+        aways= [[0,0]]*(int(np.size(objects,axis=0)/2))
+        i=-1
+        while True:
+            while True:
+                diff = destination[bxis] - point[bxis]
+                close, away = (left, right) if diff <= 0 else (right, left)
+                diff2=diff*diff
+                if(diff2<best[-1][1]):
+                    here_sd = sum((point[1:]-destination[1:])*(point[1:]-destination[1:]))
+                    if here_sd < best[-1][1]:
+                        for f in range(e):
+                            if(here_sd < best[f][1]):
+                                best[f+1:e] = best[f:-1]
+                                best[f]=[point,here_sd]
+                                break
+                    if (not away is None):
+                        i+=1
+                        aways[i]=([away,diff2])
+                if(close is None):
+                    break
+                point,bxis,left,right = close
+            while (not i==-1):
+                if(aways[i][1]>best[-1][1]):
+                    i-=1
+                else:
+                    point, bxis, left, right=aways[i][0]
+                    i-=1
+                    break
+            if i==-1:
+                break;
+            
+        return best
+
+#    def nearest_neighbor2(self, k, e, destination):
+#        
+#        best = [[0,2*k]]*e
+#
+#        def recursive_search(here):
+#            if here is None:
+#                return
+#            point, bxis, left, right = here
+#            here_sd = sum((point[1:]-destination[1:])*(point[1:]-destination[1:]))
+#            if here_sd < best[-1][1]:
+#                for f in range(e):
+#                    if(here_sd < best[f][1]):
+#                        best[f+1:e] = best[f:-1]
+#                        best[f]=[point,here_sd]
+#                        break
+#            diff = destination[bxis] - point[bxis]
+#            close, away = (left, right) if diff <= 0 else (right, left)
+#            recursive_search(close)
+#            if diff * diff < best[-1][1]:
+#                recursive_search(away)
+#
+#        recursive_search(self.root)
+#        return best
+
+def classify1(name, KSET, l):
+    tic=time.time()
+    data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
+    data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
+    np.random.shuffle(data)    
+    k=np.size(data,axis=1)-1
+    b=np.size(data, axis = 0)
+    m=b % l
+    a=0
+    D=[0]*l
+    K=np.size(KSET)
+    for i in range(m):
+        D[i]=data[a:a+int(b/l)+1,:]
+        a+=int(b/l)+1
+    for i in range(l-m):
+        D[i+m]=data[a:a+int(b/l),:]
+        a+=int(b/l)
+    f=np.array([0.0]*K)
+    g=np.array([0.0]*K)
+    A=[0]*l
+    for i in range(l):        
+        Di=np.zeros((b-np.size(D[i],axis=0),k+1))
+        a=0
+        for j in range(l):
+            if (not j == i):
+                Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
+                a+=np.size(D[j],axis=0)
+        A[i]=KDTree1(k,Di)
+    for i in range(l):
+        f=np.array([0.0]*K)
+        for j in range(np.size(D[i], axis = 0)):
+            t=0
+            Ab = np.array(A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i]))
+            for e in np.arange(0,K,1):
+                if(e==0):
+                    t += Ab[0:KSET[0],0][0][0]
+                else:
+                    t += Ab[KSET[e-1]:KSET[e],0][0][0]
+                if t == 0:
+                    f_Df = 1
+                else:
+                    f_Df = np.sign(t)
+                if (not f_Df == D[i][j,0]):
+                    f[e] += 1
+        f/=np.size(D[i],axis=0)
+        g+=f
+    g/=l
+    print(g)
+    k1=KSET[np.argmin(g)]
+    k1=50
+    F = 0.0
+    writer = csv.writer(open("{}.result.csv".format(name), "w"))
+    for i in range(np.size(data2, axis=0)):
+        x = data2[i,:]
+        f_Df=0
+        for j in range(l):
+            Ab = np.array(A[j].nearest_neighbor1(k,k1,x,D[j]))
+            Abs = Ab[0:k1,0]
+            s = np.sum(Abs, axis = 0)[0]
+            if s == 0:
+                f_Df += 1
+            else:
+                f_Df += np.sign(s)
+        f_Df=np.sign(f_Df+0.5)
+        vector = [f_Df] + x[1:].tolist()
+        writer.writerows([vector])
+        if not f_Df == x[0]:
+            F += 1
+    toc=time.time()
+    print(toc-tic)
+    return (F/np.size(data2, axis=0))

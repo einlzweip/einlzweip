@@ -6,9 +6,9 @@ import numpy as np
 import time
 import csv
 
-name = "bananas-1-2d"
+name = "toy-10d"
 l = 5
-KSET = np.arange(1,201,1)
+KSET = np.arange(1,201)
 
 Node = collections.namedtuple("Node", 'point axis left right')
 
@@ -19,7 +19,7 @@ class KDTree1(object):
             if not objects:
                 return None
             objects.sort(key=lambda o: o[bxis])
-            median_idx = int(len(objects)/2)
+            median_idx = len(objects)//2
             median_point = objects[median_idx]
             next_axis = bxis % k + 1 
             return Node(median_point, bxis,
@@ -29,10 +29,10 @@ class KDTree1(object):
             print(toc-tic)
         self.root = build_tree(list(objects))        
 
-    def nearest_neighbor1(self, k, e, destination,objects):
+    def nearest_neighbor1(self, k, e, destination,siz):
         best = [[0,2*k]]*e
         point, bxis, left, right = self.root
-        aways= [[0,0]]*(int(np.size(objects,axis=0)/2))
+        aways= [[0,0]]*(siz//2)
         i=-1
         while True:
             while True:
@@ -90,6 +90,7 @@ class KDTree1(object):
 #        return best
 
 def classify1(name, KSET, l):
+    KSET=np.sort(KSET)
     tic=time.time()
     data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
     data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
@@ -100,12 +101,16 @@ def classify1(name, KSET, l):
     a=0
     D=[0]*l
     K=np.size(KSET)
+    sizes=[0]*l
+    n=b//l
     for i in range(m):
-        D[i]=data[a:a+int(b/l)+1,:]
-        a+=int(b/l)+1
+        D[i]=data[a:a+n+1,:]
+        sizes[i]= n+1
+        a+=n+1
     for i in range(l-m):
-        D[i+m]=data[a:a+int(b/l),:]
-        a+=int(b/l)
+        D[i+m]=data[a:a+n,:]
+        a+=n
+        sizes[i+m]=n
     f=np.array([0.0]*K)
     g=np.array([0.0]*K)
     A=[0]*l
@@ -114,19 +119,22 @@ def classify1(name, KSET, l):
         a=0
         for j in range(l):
             if (not j == i):
-                Di[a:a+np.size(D[j],axis=0),0:k+1]=D[j]
+                Di[a:a+np.size(D[j],axis=0),:]=D[j]
                 a+=np.size(D[j],axis=0)
         A[i]=KDTree1(k,Di)
     for i in range(l):
         f=np.array([0.0]*K)
         for j in range(np.size(D[i], axis = 0)):
-            t=0
-            Ab = np.array(A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],D[i]))
-            for e in np.arange(0,K,1):
-                if(e==0):
-                    t += np.sum(Ab[0:KSET[0],0], axis = 0)[0]
-                else:
-                    t += np.sum(Ab[KSET[e-1]:KSET[e],0], axis = 0)[0]
+            Ab = np.array(A[i].nearest_neighbor1(k,KSET[-1],D[i][j,:],sizes[i]))
+            t=np.sum(Ab[0:KSET[0],0], axis = 0)[0]
+            if t == 0:
+                    f_Df = 1
+            else:
+                f_Df = np.sign(t)
+            if (not f_Df == D[i][j,0]):
+                f[0] += 1
+            for e in np.arange(1,K):
+                t += np.sum(Ab[KSET[e-1]:KSET[e],0], axis = 0)[0]
                 if t == 0:
                     f_Df = 1
                 else:
@@ -136,23 +144,25 @@ def classify1(name, KSET, l):
         f/=np.size(D[i],axis=0)
         g+=f
     g/=l
-    print(g)
     k1=KSET[np.argmin(g)]
-    k1=50
+    print(np.argmin(g))
     F = 0.0
     writer = csv.writer(open("{}.result.csv".format(name), "w"))
     for i in range(np.size(data2, axis=0)):
         x = data2[i,:]
         f_Df=0
         for j in range(l):
-            Ab = np.array(A[j].nearest_neighbor1(k,k1,x,D[j]))
+            Ab = np.array(A[j].nearest_neighbor1(k,k1,x,sizes[j]))
             Abs = Ab[0:k1,0]
             s = np.sum(Abs, axis = 0)[0]
             if s == 0:
                 f_Df += 1
             else:
                 f_Df += np.sign(s)
-        f_Df=np.sign(f_Df+0.5)
+        if f_Df ==0:
+            f_Df=1
+        else:
+            f_Df=np.sign(f_Df)
         vector = [f_Df] + x[1:].tolist()
         writer.writerows([vector])
         if not f_Df == x[0]:

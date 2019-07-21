@@ -142,9 +142,9 @@ def classify1(name, KSET, l):
                 f[e]=float(0)
                 
                 if(e==0):
-                    t += Ab[0:KSET[0],0][0][0]
+                    t += np.sum(Ab[0:KSET[0],0], axis = 0)[0]
                 else:
-                    t += Ab[KSET[e-1]:KSET[e],0][0][0]
+                    t += np.sum(Ab[KSET[e-1]:KSET[e],0], axis = 0)[0]
                 
                 if t == 0:
                     f_Df = 1

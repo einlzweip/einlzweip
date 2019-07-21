@@ -107,6 +107,7 @@ def classify1(name, KSET, l):
     data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
     
     #Erzeugung der zufälligen Aufteilung in l gleich große Datensätze
+    #Der i-te Datensatz wird in D[i] gespeichert
     np.random.shuffle(data)    
     k=np.size(data,axis=1)-1
     b=np.size(data, axis = 0)
@@ -125,7 +126,7 @@ def classify1(name, KSET, l):
         a+=n
         sizes[i+m]=n
         
-    
+    #Erzeugen der Mengen D\D[i] und Speichern der zugehörigen KDTrees in A[i]
     f=np.array([0.0]*K)
     g=np.array([0.0]*K)
     A=[0]*l
@@ -137,6 +138,9 @@ def classify1(name, KSET, l):
                 Di[a:a+np.size(D[j],axis=0),:]=D[j]
                 a+=np.size(D[j],axis=0)
         A[i]=KDTree1(k,Di)
+        
+    #Berechnung von f_D\i,e (x) für alle x aus D[i] mit i=1,..,l und e in KSET
+    #Am Ende wird der Mittelwert von allen Werten genommen und in der Liste g gespeichert
     for i in range(l):
         f=np.array([0.0]*K)
         for j in range(np.size(D[i], axis = 0)):
@@ -159,8 +163,12 @@ def classify1(name, KSET, l):
         f/=np.size(D[i],axis=0)
         g+=f
     g/=l
+    
+    #Speichern des k1 mit dem kleinsten Mittlwert aus g
     k1=KSET[np.argmin(g)]
     print(np.argmin(g))
+    
+    #Berechnung des Klassifikators mit k=k1 und Aufschreiben der berechneten Werte in result.csv
     F = 0.0
     writer = csv.writer(open("{}.result.csv".format(name), "w"))
     for i in range(np.size(data2, axis=0)):
@@ -182,6 +190,10 @@ def classify1(name, KSET, l):
         writer.writerows([vector])
         if not f_Df == x[0]:
             F += 1
+            
+    #Endzeitpunkt für die Messung der Zeit
     toc=time.time()
     print(toc-tic)
+    
+    #Ausgabe des gemittelten Klassifikators
     return (F/np.size(data2, axis=0))

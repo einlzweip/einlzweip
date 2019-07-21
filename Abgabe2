@@ -6,13 +6,17 @@ import numpy as np
 import time
 import csv
 
+#Festlegung der Eingabeparameter für die classify Funktion
 name = "toy-10d"
 l = 5
 KSET = np.arange(1,201)
 
+#Definition eines Knotens für den KDTree
 Node = collections.namedtuple("Node", 'point axis left right')
 
-class KDTree1(object):    
+#Definition eines KDTree als Klasse
+class KDTree1(object):
+    #Initialisierung des KDTree mithilfe der Dimension k der Punkte und dem Datensatz object
     def __init__(self, k, objects):
         def build_tree(objects, bxis=1):
             tic=time.time()
@@ -28,7 +32,8 @@ class KDTree1(object):
             toc=time.time()
             print(toc-tic)
         self.root = build_tree(list(objects))        
-
+    
+    #Iterative Suche nach den e nächsten Nachbarn des Punktes destination mit Dimension k und Länge des Datensatzes siz
     def nearest_neighbor1(self, k, e, destination,siz):
         best = [[0,2*k]]*e
         point, bxis, left, right = self.root
@@ -64,7 +69,7 @@ class KDTree1(object):
                 break;
             
         return best
-
+     #Rekursive Suche nach den e nächsten Nachbarn des Punktes destination mit Dimension k
 #    def nearest_neighbor2(self, k, e, destination):
 #        
 #        best = [[0,2*k]]*e
@@ -89,11 +94,19 @@ class KDTree1(object):
 #        recursive_search(self.root)
 #        return best
 
+#Definition der classify Funktion
 def classify1(name, KSET, l):
+    #Sortieren der Menge KSET für den Fall, dass sie unsortiert angegeben wird
     KSET=np.sort(KSET)
+    
+    #Startzeitpunkt für die Messung der Zeit
     tic=time.time()
+    
+    #Lesen der test und train Datensätze
     data2 = np.genfromtxt("{}.test.csv".format(name), delimiter = ",")
     data = np.genfromtxt("{}.train.csv".format(name), delimiter = ",")
+    
+    #Erzeugung der zufälligen Aufteilung in l gleich große Datensätze
     np.random.shuffle(data)    
     k=np.size(data,axis=1)-1
     b=np.size(data, axis = 0)
@@ -111,6 +124,8 @@ def classify1(name, KSET, l):
         D[i+m]=data[a:a+n,:]
         a+=n
         sizes[i+m]=n
+        
+    
     f=np.array([0.0]*K)
     g=np.array([0.0]*K)
     A=[0]*l
